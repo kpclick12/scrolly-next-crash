@@ -1,0 +1,393 @@
+/* Self-hosted font (GDPR-friendly — no third-party requests). Variable weight 400-900. */
+@font-face {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/fonts/playfair-display-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Playfair Display";
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/fonts/playfair-display-latin-italic.woff2") format("woff2");
+}
+
+:root {
+  /* Fortune-teller's parlour: tarot-card parchment for the page, deep velvet
+     indigo for the surfaces that are always dark (the 3D hero and the closing
+     band), and brass for the chrome. Sibling of scrolly-wealth's warm cream
+     and scrolly-monopoly's game-night paper — this one goes cooler and
+     dustier, like a card that has been handled a lot. */
+  --surface-1: #faf5ea;
+  --page-plane: #f0e9db;
+  --text-primary: #211d2b;
+  --text-secondary: #4b445c;
+  --text-muted: #736c85;
+  --gridline: #e4dccb;
+  --baseline: #c1b7a4;
+  --border: rgba(33, 29, 43, 0.13);
+
+  /* Velvet surfaces — the séance table. Always dark regardless of the OS
+     color-scheme; these back the hero, the interlude and the closing, which
+     never go "paper". */
+  --velvet: #241a44;
+  --velvet-deep: #120c22;
+  --brass: #d9a441;
+  --brass-deep: #a87c22;
+  --parlour-cream: #f3e8d2;
+
+  /* Categorical chart palette — one hue per crash, fixed order, never cycled.
+     Validated with the dataviz skill's validator against the parchment surface
+     above, all-pairs (not just adjacent):
+       node scripts/validate_palette.js "#2a78d6,#d93a2b,#0f8f63" \
+         --mode light --surface "#faf5ea" --pairs all
+     → every check PASSES: lightness band, chroma floor, CVD separation
+       (worst pair green↔red ΔE 8.8 deutan), normal-vision floor, and 3:1
+       contrast against the surface.
+
+     WHAT DOES NOT SURVIVE IS THE DIMMED STATE. Flattened at 48% over the
+     parchment these become #96b9e0 / #ea9b8e / #89c4a9, and the worst pair
+     falls to ΔE 4.1 — indistinguishable, exactly the failure the skill warns
+     about. So de-emphasis in this piece never carries identity: every series
+     keeps an always-on direct label, and dimming only ever means "not the one
+     being talked about right now". */
+  --series-blue: #2a78d6;
+  --series-red: #d93a2b;
+  --series-green: #0f8f63;
+
+  /* Darker steps of the same hues, for use as TEXT on the parchment — the
+     chart-mark versions are tuned for 3:1 as marks, not 4.5:1 as type. */
+  --ink-blue: #1a5aa8;
+  --ink-red: #a8291f;
+  --ink-green: #0b6e4c;
+  --ink-violet: #6d3f9e;
+  --ink-brass: #7a5a10;
+
+  --serif: "Playfair Display", Georgia, "Times New Roman", "Liberation Serif", serif;
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --accent: var(--ink-violet);
+
+  font: 16px/1.55 var(--sans);
+  color-scheme: light dark;
+  color: var(--text-primary);
+  background: var(--page-plane);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Same velvet family as the always-dark sections, so dark mode reads as
+       one continuous parlour rather than a light page with the lamps off. */
+    --surface-1: #1c1533;
+    --page-plane: #120c22;
+    --text-primary: #efe9dd;
+    --text-secondary: #c6bfd3;
+    --text-muted: #948da6;
+    --gridline: #2a2148;
+    --baseline: #453a68;
+    --border: rgba(239, 233, 221, 0.13);
+
+    /* Re-stepped for the velvet surface, not flipped. Validated separately:
+         node scripts/validate_palette.js "#3987e5,#e05a45,#14a583" \
+           --mode dark --surface "#1c1533" --pairs all
+       → every check PASSES, worst pair green↔red ΔE 9.1 deutan.
+       Getting here needed real re-stepping: the dark lightness band is only
+       0.48–0.67, and the light palette's own hues fall straight out of it. */
+    --series-blue: #3987e5;
+    --series-red: #e05a45;
+    --series-green: #14a583;
+
+    --ink-blue: #6aa6ee;
+    --ink-red: #ef8878;
+    --ink-green: #3cc39c;
+    --ink-violet: #b48ce8;
+    --ink-brass: #dcae55;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/* Last line of defense, not the fix: if some future element still forces a
+   descendant wider than the viewport, clip it here instead of letting the
+   whole page grow a horizontal scrollbar. The real fixes are the min-width:0 /
+   minmax(0, 1fr) declarations in the grid and flex layouts. */
+html,
+body {
+  overflow-x: clip;
+}
+
+h1, h2, h3 {
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* Inline colored word — ties a word in the prose to a mark in the chart. */
+.badge {
+  display: inline-block;
+  padding: 1px 8px;
+  font-weight: 700;
+  border-radius: 2px;
+  color: #ffffff;
+}
+.badge-red {
+  background: var(--series-red);
+  color: #fff6f4;
+}
+.badge-blue {
+  background: var(--series-blue);
+  color: #f3f8ff;
+}
+.badge-green {
+  background: var(--series-green);
+  color: #f2fbf7;
+}
+
+/* Visible keyboard focus everywhere by default — dark ink on the parchment.
+   The permanently dark sections override this locally with a brass ring. */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+/* Respect the reduced-motion system setting. The 3D hero checks the same
+   media query in JS and slows its ambient time to a crawl. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Shared scrolly-step card styles.
+   Declared ONCE here so every act stays visually consistent. Each act sets
+   --act-accent on its own wrapper; the border and the kicker both read that
+   one variable, so an act can never end up with a mismatched pair.
+   Acts must NOT redeclare these selectors in their own <style> — they are
+   global, and the last act mounted would win for every act on the page.
+------------------------------------------------------------------------ */
+.act {
+  --act-pad-x: 24px;
+  padding-inline: var(--act-pad-x);
+}
+.scrolly-step {
+  background: var(--surface-1);
+  border-left: 6px solid var(--act-accent, var(--ink-violet));
+  padding: 28px 32px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(18, 12, 34, 0.1);
+  min-width: 0;
+  /* Uniform height within an act. Without a floor, card height follows
+     paragraph length and the column drifts by 100–200px as you scroll, which
+     reads as sloppy. Each act sets --step-min / --step-min-mobile from its
+     own tallest card. */
+  min-height: var(--step-min, 0);
+}
+.scrolly-step > * {
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+}
+.scrolly-step.is-active > * {
+  opacity: 1;
+}
+.scrolly-step .kicker {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--act-accent, var(--ink-violet));
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+.scrolly-step h3 {
+  font-family: var(--serif);
+  margin: 0 0 14px;
+  font-size: 23px;
+  line-height: 1.25;
+}
+.scrolly-step p {
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.scrolly-step p:last-child {
+  margin-bottom: 0;
+}
+.scrolly-step .callout {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 14px 0 12px;
+  padding: 12px 16px;
+  background: var(--page-plane);
+  border-radius: 6px;
+}
+.scrolly-step .callout-num {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--act-accent, var(--ink-violet));
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  line-height: 1;
+}
+.scrolly-step .callout-label {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+/* A card that is one line and nothing else — the beat that lets the reader
+   breathe. It keeps the act's min-height so the column stays even. */
+.scrolly-step.beat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.scrolly-step.beat h3 {
+  font-size: 27px;
+  margin-bottom: 0;
+}
+@media (max-width: 860px) {
+  /* Full-bleed: the card spans edge to edge, cancelling the act's gutter.
+     On a 360px screen this recovers ~48px of line width. Rounded corners
+     flush against the viewport edge read as a bug, so the radius goes; a
+     hairline top/bottom rule and a deeper shadow replace the "surface sitting
+     on the page" cue that the side gaps used to give. */
+  .scrolly-step {
+    width: calc(100% + 2 * var(--act-pad-x));
+    margin-inline: calc(-1 * var(--act-pad-x));
+    padding: 22px 20px;
+    border-radius: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 6px 20px rgba(18, 12, 34, 0.16);
+    min-height: var(--step-min-mobile, 0);
+  }
+  .scrolly-step h3 {
+    font-size: 20px;
+  }
+  .scrolly-step.beat h3 {
+    font-size: 23px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Shared act header. The kicker is a tarot card — the conceit's spine.
+------------------------------------------------------------------------ */
+.act-head {
+  max-width: 640px;
+  margin: 0 auto;
+  /* Horizontal inset comes from .act's --act-pad-x, so the gutter is defined
+     in exactly one place. */
+  padding: 110px 0 40px;
+  text-align: center;
+}
+.act-head .act-kicker {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 700;
+  color: var(--act-accent, var(--ink-violet));
+  margin: 0 0 10px;
+}
+.act-head h2 {
+  font-family: var(--serif);
+  font-size: clamp(30px, 5vw, 44px);
+  line-height: 1.1;
+  margin: 0 0 16px;
+}
+.act-head .act-dek {
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* ---------------------------------------------------------------------
+   Visual frame stack — the sticky-panel crossfade. All slot components stay
+   MOUNTED at once; only opacity/visibility toggle between them, and the outer
+   box has an explicit height (set per act) so swapping never shifts layout.
+------------------------------------------------------------------------ */
+.visual-frame-stack {
+  position: relative;
+  width: 100%;
+  height: var(--stack-height, 440px);
+}
+.visual-frame-stack > .frame {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease;
+}
+.visual-frame-stack > .frame.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+@media (max-width: 860px) {
+  .visual-frame-stack {
+    height: var(--stack-height-mobile, 360px);
+  }
+  /* Anchor content to the TOP of the panel on mobile instead of centering it
+     — the sticky panel is pinned at the top of the viewport while step cards
+     slide up over it from below, so top-anchoring keeps the least content at
+     risk of ending up underneath an incoming card. */
+  .visual-frame-stack > .frame {
+    align-items: flex-start;
+    padding-top: 4px;
+    padding-bottom: 2px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Shared chart figure — every hand-built SVG sits in one of these.
+------------------------------------------------------------------------ */
+.chart {
+  margin: 0;
+  width: min(620px, 100%);
+}
+.chart figcaption {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.chart svg {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+}
+.chart .note {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 8px 0 0;
+}

@@ -1,0 +1,55 @@
+{
+  "note": "The recession-forecast record comes from one paper, quoted at its own numbers. `predicted` counts recessions that the private-sector consensus (Consensus Economics) had forecast by the April of the year BEFORE the recession began — the paper's own headline test.",
+  "source": "Zidong An, João Tovar Jalles and Prakash Loungani, \"How Well Do Economists Forecast Recessions?\", IMF Working Paper WP/18/39, March 2018. Nate Silver's 2008 and 2012 results are the published FiveThirtyEight record. The Samuelson line is from his Newsweek column, 19 September 1966.",
+  "recessions": {
+    "total": 153,
+    "predicted": 5,
+    "countries": 63,
+    "from": 1992,
+    "to": 2014
+  },
+  "quote": {
+    "text": "Wall Street indexes predicted nine out of the last five recessions!",
+    "who": "Paul Samuelson",
+    "where": "Newsweek, 19 September 1966",
+    "misquote": "Economists have predicted nine of the last five recessions."
+  },
+  "silver": {
+    "states2008": 49,
+    "statesTotal": 50,
+    "missed": "Indiana",
+    "states2012": 50,
+    "book": "The Signal and the Noise",
+    "bookYear": 2012
+  },
+  "books": [
+    {
+      "title": "The Doctrine of Chances",
+      "short": "Doctrine of Chances",
+      "author": "de Moivre",
+      "year": 1718,
+      "blurb": "Probability, worked out on gambling problems, three centuries before anyone said \"data science\"."
+    },
+    {
+      "title": "Extraordinary Popular Delusions and the Madness of Crowds",
+      "short": "Popular Delusions",
+      "author": "Mackay",
+      "year": 1841,
+      "blurb": "The first great catalogue of financial manias. Still in print. Still ignored."
+    },
+    {
+      "title": "Irrational Exuberance",
+      "short": "Irrational Exuberance",
+      "author": "Shiller",
+      "year": 2000,
+      "blurb": "Published in March 2000 — the month the Nasdaq peaked. The one that landed."
+    },
+    {
+      "title": "The Signal and the Noise",
+      "short": "Signal and the Noise",
+      "author": "Silver",
+      "year": 2012,
+      "blurb": "The book that made forecasting a personality. Its actual argument is mostly about humility."
+    }
+  ]
+}
