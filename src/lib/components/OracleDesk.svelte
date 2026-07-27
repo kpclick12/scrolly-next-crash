@@ -577,7 +577,7 @@
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7);
   }
   .hero-card h1 {
-    font-family: var(--serif);
+    font-family: var(--display);
     font-size: clamp(38px, 6.6vw, 72px);
     line-height: 1.04;
     color: #ffffff;
@@ -645,7 +645,7 @@
     margin-bottom: 14px;
   }
   .hero-fallback h1 {
-    font-family: var(--serif);
+    font-family: var(--display);
     font-size: clamp(36px, 6.6vw, 68px);
     color: #ffffff;
     margin: 0 0 16px;

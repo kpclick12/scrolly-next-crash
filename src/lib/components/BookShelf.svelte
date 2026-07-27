@@ -88,7 +88,7 @@
     filter: none;
   }
   .spine-title {
-    font-family: var(--serif);
+    font-family: var(--display);
     font-size: 13.5px;
     font-weight: 700;
   }

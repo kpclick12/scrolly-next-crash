@@ -53,7 +53,15 @@ if (fail.length) {
 }
 
 // ---- The page. Same tokens as app.css, inlined so this file stands alone.
-const font = readFileSync(join(ROOT, "public/fonts/playfair-display-latin.woff2")).toString("base64");
+const b64 = (f) => readFileSync(join(ROOT, "public/fonts", f)).toString("base64");
+const cinzel = b64("cinzel-latin.woff2");
+const garamond = b64("ebgaramond-latin.woff2");
+const garamondItalic = b64("ebgaramond-latin-italic.woff2");
+const FACES = `
+@font-face{font-family:"Cinzel";font-weight:400 900;src:url(data:font/woff2;base64,${cinzel}) format("woff2");}
+@font-face{font-family:"EB Garamond";font-weight:400 800;src:url(data:font/woff2;base64,${garamond}) format("woff2");}
+@font-face{font-family:"EB Garamond";font-style:italic;font-weight:400 800;src:url(data:font/woff2;base64,${garamondItalic}) format("woff2");}
+`;
 
 const BAR = { bad: "#d93a2b", mid: "#2a78d6", good: "#0f8f63" };
 const rowsHtml = oracles.oracles
@@ -71,22 +79,22 @@ const rowsHtml = oracles.oracles
   .join("");
 
 const html = `<!doctype html><html><head><meta charset="utf-8"><style>
-@font-face{font-family:"Playfair Display";font-weight:400 900;src:url(data:font/woff2;base64,${font}) format("woff2");}
+${FACES}
 *{box-sizing:border-box;margin:0;}
 /* Everything below is sized to fit 2000x1500 EXACTLY once — an earlier
    version overflowed and cut off the octopus, i.e. the subject of the
    headline. The script asserts the fit at the end rather than trusting it. */
 body{position:relative;width:2000px;height:1500px;background:#faf5ea;color:#211d2b;overflow:hidden;
-  font:400 28px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:64px 90px 0;}
-h1{font-family:"Playfair Display",Georgia,serif;font-size:76px;line-height:1.03;font-weight:800;margin-bottom:18px;max-width:1660px;}
+  font:400 30px/1.42 "EB Garamond",Georgia,serif;padding:64px 90px 0;}
+h1{font-family:"Cinzel",Georgia,serif;font-size:76px;line-height:1.03;font-weight:800;margin-bottom:18px;max-width:1660px;}
 .sub{font-size:32px;line-height:1.35;color:#4b445c;max-width:1600px;margin-bottom:36px;}
 .row{margin-bottom:26px;}
-.name{font-family:"Playfair Display",Georgia,serif;font-size:40px;font-weight:700;margin-bottom:7px;}
+.name{font-family:"Cinzel",Georgia,serif;font-size:40px;font-weight:700;margin-bottom:7px;}
 .track{position:relative;height:52px;background:#e4dccb;border-radius:5px;}
 .bar{height:52px;border-radius:5px;}
 .val{position:absolute;top:2px;left:0;width:100%;height:100%;}
 .measures{font-size:24px;color:#736c85;margin-top:8px;max-width:1800px;white-space:nowrap;overflow:hidden;}
-.warn{margin-top:2px;font-size:30px;font-style:italic;color:#a8291f;}
+.warn{margin-top:2px;font-size:32px;font-style:italic;color:#a8291f;}
 .src{position:absolute;bottom:44px;left:90px;right:90px;display:flex;justify-content:space-between;gap:40px;
   font-size:24px;color:#736c85;border-top:2px solid #c1b7a4;padding-top:16px;}
 </style></head><body>
@@ -120,7 +128,7 @@ await page.evaluate(() => {
     val.style.width = "auto";
     val.style.fontWeight = "700";
     val.style.fontSize = "36px";
-    val.style.fontFamily = '"Playfair Display", Georgia, serif';
+    val.style.fontFamily = '"Cinzel", Georgia, serif';
   });
 });
 
@@ -152,18 +160,18 @@ await page.screenshot({ path: join(ROOT, "public/share-chart.png") });
 const top = ranked[0];
 const bottom = ranked[ranked.length - 1];
 const og = `<!doctype html><html><head><meta charset="utf-8"><style>
-@font-face{font-family:"Playfair Display";font-weight:400 900;src:url(data:font/woff2;base64,${font}) format("woff2");}
+${FACES}
 *{box-sizing:border-box;margin:0;}
 body{position:relative;width:1200px;height:630px;background:#faf5ea;color:#211d2b;overflow:hidden;
-  font:400 20px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:54px 64px 0;}
-h1{font-family:"Playfair Display",Georgia,serif;font-size:60px;line-height:1.02;font-weight:800;margin-bottom:14px;max-width:1020px;}
-.sub{font-size:24px;line-height:1.35;color:#4b445c;max-width:980px;margin-bottom:44px;}
-.row{margin-bottom:34px;}
-.name{font-family:"Playfair Display",Georgia,serif;font-size:31px;font-weight:700;margin-bottom:6px;}
-.track{position:relative;height:40px;background:#e4dccb;border-radius:4px;}
-.bar{height:40px;border-radius:4px;}
-.val{position:absolute;top:1px;font-family:"Playfair Display",Georgia,serif;font-size:28px;font-weight:700;}
-.measures{font-size:18px;color:#736c85;margin-top:7px;white-space:nowrap;overflow:hidden;}
+  font:400 22px/1.4 "EB Garamond",Georgia,serif;padding:54px 64px 0;}
+h1{font-family:"Cinzel",Georgia,serif;font-size:46px;line-height:1.05;font-weight:800;margin-bottom:14px;max-width:1030px;}
+.sub{font-size:22px;line-height:1.35;color:#4b445c;max-width:980px;margin-bottom:34px;}
+.row{margin-bottom:26px;}
+.name{font-family:"Cinzel",Georgia,serif;font-size:27px;font-weight:700;margin-bottom:6px;}
+.track{position:relative;height:36px;background:#e4dccb;border-radius:4px;}
+.bar{height:36px;border-radius:4px;}
+.val{position:absolute;top:1px;font-family:"Cinzel",Georgia,serif;font-size:24px;font-weight:700;}
+.measures{font-size:17px;color:#736c85;margin-top:7px;white-space:nowrap;overflow:hidden;}
 .src{position:absolute;bottom:30px;left:64px;right:64px;display:flex;justify-content:space-between;gap:30px;
   font-size:17px;color:#736c85;border-top:2px solid #c1b7a4;padding-top:12px;}
 </style></head><body>

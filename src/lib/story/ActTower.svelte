@@ -1,6 +1,6 @@
 <script>
   import Scrolly from "../components/Scrolly.svelte";
-  import DrawdownChart from "../components/DrawdownChart.svelte";
+  import TowerFall from "../components/TowerFall.svelte";
 
   let { data } = $props();
   let currentStep = $state(0);
@@ -10,9 +10,9 @@
 </script>
 
 <section
-  class="act"
+  class="act mat-news"
   aria-label="The Tower: three crashes"
-  style="--act-accent: var(--ink-red); --step-min: 330px; --step-min-mobile: 400px;"
+  style="--act-accent: var(--ink-red); --step-min: 416px; --step-min-mobile: 458px;"
 >
   <div class="act-head">
     <p class="act-kicker">The Tower</p>
@@ -26,9 +26,9 @@
 
   <Scrolly onStepChange={(i) => (currentStep = i)}>
     {#snippet visual()}
-      <div class="visual-frame-stack" style="--stack-height: 430px; --stack-height-mobile: clamp(300px, 44svh, 400px);">
+      <div class="visual-frame-stack" style="--stack-height: 445px; --stack-height-mobile: clamp(300px, 44svh, 400px);">
         <div class="frame is-active">
-          <DrawdownChart crashes={data.crashes.crashes} {focus} />
+          <TowerFall crashes={data.crashes.crashes} {focus} />
         </div>
       </div>
     {/snippet}

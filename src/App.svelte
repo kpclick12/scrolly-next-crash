@@ -114,8 +114,8 @@
         IMF Working Paper WP/18/39 (March 2018): of 153 recessions across 63
         countries between 1992 and 2014, the private-sector forecasting
         consensus had five on the books by the April of the preceding year. The
-        dots in the waffle are one per recession; which five are lit is
-        arbitrary, since the paper counts them rather than naming them.
+        cards in the spread are one per recession; which five are turned face
+        up is arbitrary, since the paper counts them rather than naming them.
       </li>
       <li>
         <strong>The Samuelson line</strong> — Paul Samuelson, Newsweek, 19
@@ -133,13 +133,15 @@
         between 1928 and 2024, against 28 bull markets (Ned Davis Research,
         widely republished by Hartford Funds). Across 96 years that is about 28
         percent of years, which is the number the perma-bear is quietly
-        collecting. In the year-grid, <em>the count is real and the placement
-        is not</em>: the shaded squares are spread to show the rate, not to date
-        each bear market, and the chart says so.
+        collecting. In the candle rack, <em>the count is real and the placement
+        is not</em>: the snuffed candles are spread to show the rate, not to
+        date each bear market, and the figure says so.
       </li>
       <li>
-        <strong>The stopped clock</strong> is an illustration, not data. So is
-        the couch, and so is the flock.
+        <strong>What is illustration, not data</strong> — the stopped clock,
+        the couch, the flock, and the tower the three figures fall from. The
+        figures' trails, though, are the real drawdown paths, and the stone
+        courses they fall past are the real depth gridlines.
       </li>
       <li>
         <strong>"The market can remain irrational longer than you can remain
@@ -185,9 +187,11 @@
         He died on 26 October 2010.
       </li>
       <li>
-        <strong>The oracle scoreboard</strong> deliberately puts five
-        incomparable records on one axis, and says so on the chart. It is the
-        one figure in this piece built to be distrusted.
+        <strong>The wheel</strong> deliberately puts five incomparable records
+        on one rim, and says so on itself. It is the one figure in this piece
+        built to be distrusted, and it is drawn as a fairground wheel for
+        exactly that reason — a tidy bar chart was lending it an authority it
+        has not earned.
       </li>
       <li>
         <strong>Colour</strong> — the categorical palette was validated against
@@ -218,7 +222,7 @@
 
 <style>
   main {
-    max-width: 1100px;
+    max-width: 1140px;
     margin: 0 auto;
   }
 
@@ -226,34 +230,40 @@
   .interlude {
     background: radial-gradient(120% 100% at 50% 0%, var(--velvet) 0%, var(--velvet-deep) 100%);
     margin-top: 96px;
+    /* A brass hairline top and bottom, so the band reads as an inset plate
+       rather than a colour change. */
+    border-block: 1px solid rgba(217, 164, 65, 0.34);
   }
   .interlude-inner {
-    max-width: 680px;
+    max-width: 700px;
     margin: 0 auto;
     padding: 76px 24px 80px;
     text-align: center;
   }
   .quote-mark {
-    font-family: var(--serif);
-    font-size: 72px;
-    line-height: 0.6;
+    font-family: var(--body);
+    font-size: 92px;
+    line-height: 0.5;
     color: var(--brass);
-    margin: 0 0 12px;
+    margin: 0 0 20px;
   }
   .interlude blockquote {
-    margin: 0 0 26px;
+    margin: 0 0 28px;
   }
   .interlude blockquote p {
-    font-family: var(--serif);
-    font-size: clamp(23px, 3.6vw, 34px);
-    line-height: 1.28;
+    font-family: var(--body);
+    font-style: italic;
+    font-size: clamp(25px, 3.9vw, 39px);
+    line-height: 1.26;
     color: #ffffff;
-    margin: 0 0 16px;
+    margin: 0 0 20px;
+    text-wrap: balance;
   }
   .interlude cite {
+    font-family: var(--display);
     font-style: normal;
-    font-size: 13px;
-    letter-spacing: 0.16em;
+    font-size: 11.5px;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     font-weight: 700;
     color: var(--brass);
@@ -262,14 +272,11 @@
      `p { color: var(--text-secondary) }` tuned for paper beats inheritance
      from this wrapper, and the text would render at about 1.5:1. */
   .interlude-note {
-    font-size: 14.5px;
+    font-size: 16.5px;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.6);
-    max-width: 520px;
+    color: rgba(255, 255, 255, 0.62);
+    max-width: 540px;
     margin: 0 auto;
-  }
-  .interlude :global(a:focus-visible) {
-    outline-color: var(--brass);
   }
 
   /* ---- Closing ---- */
@@ -278,33 +285,36 @@
     text-align: center;
   }
   .closing-inner {
-    max-width: 640px;
+    max-width: 660px;
     margin: 0 auto;
-    padding: 96px 24px 104px;
+    padding: 100px 24px 108px;
   }
   .closing-ball {
-    width: 76px;
+    width: 78px;
     height: auto;
-    margin-bottom: 22px;
+    margin-bottom: 24px;
   }
   .closing h2 {
-    font-family: var(--serif);
-    font-size: clamp(30px, 5vw, 42px);
+    font-family: var(--display);
+    font-size: clamp(30px, 5vw, 46px);
+    line-height: 1.08;
     color: #ffffff;
-    margin: 0 0 20px;
+    margin: 0 0 24px;
   }
   .closing p {
-    font-size: 17px;
-    line-height: 1.65;
-    color: rgba(255, 255, 255, 0.92);
-    margin: 0 0 16px;
+    font-size: 19px;
+    line-height: 1.66;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 18px;
   }
   .closing .closing-kicker {
-    margin: 28px 0 0;
-    font-family: var(--serif);
-    font-size: 19px;
+    margin: 32px 0 0;
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 22px;
     line-height: 1.5;
     color: var(--brass);
+    text-wrap: balance;
   }
 
   /* ---- Sources ---- */
@@ -313,45 +323,55 @@
     border-top: 1px solid var(--border);
   }
   .sources-inner {
-    max-width: 680px;
+    max-width: 700px;
     margin: 0 auto;
-    padding: 64px 24px;
+    padding: 68px 24px;
   }
   .sources h2 {
-    font-family: var(--serif);
-    font-size: 22px;
-    margin: 0 0 16px;
+    font-family: var(--display);
+    font-size: 17px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin: 0 0 18px;
     color: var(--text-primary);
   }
   .sources-intro {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.6;
     color: var(--text-secondary);
-    margin: 0 0 20px;
+    margin: 0 0 22px;
   }
   .sources ul {
     margin: 0;
     padding-left: 20px;
   }
   .sources li {
-    font-size: 13.5px;
+    font-size: 15px;
     line-height: 1.6;
     color: var(--text-muted);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
   .sources li:last-child {
     margin-bottom: 0;
   }
+  .sources li :global(strong) {
+    font-family: var(--display);
+    font-size: 0.86em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
   footer {
-    padding: 40px 24px 80px;
+    padding: 44px 24px 84px;
     text-align: center;
     color: var(--text-muted);
-    font-size: 13px;
+    font-size: 15px;
     border-top: 1px solid var(--border);
     background: var(--page-plane);
   }
   footer p {
-    max-width: 520px;
+    max-width: 540px;
     margin: 0 auto;
+    font-style: italic;
   }
 </style>

@@ -17,23 +17,47 @@ shape of the argument, not just the hero image. Each act is named for a tarot
 card, and the piece walks toward the only forecaster who ever retired
 undefeated.
 
-| Act | Card | What it does |
-|---|---|---|
-| Prologue (3D) | — | A séance table laid for four. Three places hold the screen each crash arrived on: a 1929 newspaper, a 1987 computer, a 2008 phone. The fourth is empty until a crystal ball appears there, showing static. |
-| Three times the floor gave way | **The Tower** | Three crashes, one index, aligned on each peak. A crash is not one shape. |
-| Then someone made it a career | **The Magician** | Statistics is three centuries old; forecasting became famous in 2008. The consensus called 5 of 153 recessions. |
-| The end is always nigh | **Judgement** | A stopped clock, and the base rate it is quietly collecting: 28% for free. |
-| So it's psychology, then | **The Moon** | Freud's couch, shown the door, and replaced by a flock. |
-| Choose your oracle | **Wheel of Fortune** | Five records on one axis — and why that chart is rubbish. Ends with Paul. |
+| Act | Card | The visual | Printed on |
+|---|---|---|---|
+| Prologue (3D) | — | A séance table laid for four. Three places hold the screen each crash arrived on: a 1929 newspaper, a 1987 computer, a 2008 phone. The fourth is empty until a crystal ball appears there, showing static. | — |
+| Three times the floor gave way | **The Tower** | The struck tower, with three figures falling off it. Each figure's trail is its real drawdown path; the stone courses are the depth gridlines. | a torn 1929 newsprint clipping |
+| Then someone made it a career | **The Magician** | 153 recessions dealt face-down; five turned face up. | a book page, running head and folio |
+| The end is always nigh | **Judgement** | A stopped clock, then 96 votive candles — 27 of them snuffed. | a doomsday handbill |
+| So it's psychology, then | **The Moon** | Freud's couch under a night sky, replaced on the same ground by a moonlit flock. | a ruled analyst's notepad |
+| Choose your oracle | **Wheel of Fortune** | A literal wheel: five oracles riding the rim at their hit rate. | tarot cards |
+
+**Nothing here is an ordinary bar chart, and that is the design brief.** The
+encodings are unchanged and honest — the falling figures have real axes, the
+candles and the cards are counts — but the marks are the objects the conceit is
+already about. The one exception is the standalone share image, which stays a
+bar chart on purpose: in a feed at 400px wide it has to be read in a second,
+and a wheel does not survive that.
 
 Where the analogy breaks, which is the closing beat: a fortune teller's
 prediction doesn't change your future. A crash forecast does.
 
+## Type and materials
+
+**Cinzel** for display — Roman inscriptional capitals, essentially the
+lettering on a tarot card — over **EB Garamond** for body. Both variable, both
+self-hosted from `public/fonts/` (no third-party font requests, ever; that is a
+GDPR constraint, not a preference).
+
+There is deliberately **no single step-card style**. Each act's copy is printed
+on the material its subject belongs to, and the act opts in with one class on
+its wrapper (`.mat-news`, `.mat-book`, `.mat-bill`, `.mat-pad`, `.mat-card`).
+All five share only the structural part: the min-height floor, the
+inactive/active opacity, and the full-bleed treatment under 860px.
+
+The card min-heights are **measured, not guessed** — run
+`node scripts/measure-cards.mjs` against the preview server after any type or
+material change and paste the numbers back into the acts.
+
 ## Stack
 
 Svelte 5 (runes) + Vite, `d3-scale` for scales only, `three` for the one 3D
-scene. No chart library — every chart is hand-written SVG so each mark can be
-driven by the scroll. Fonts are self-hosted.
+scene. No chart library — every figure is hand-written SVG so each mark can be
+driven by the scroll.
 
 ```
 npm install
@@ -41,7 +65,8 @@ npm run dev             # local, base '/'
 npm run build           # base '/scrolly-next-crash/'
 npm run preview
 npm run share-chart     # regenerates public/share-chart.png + og-image.png
-node scripts/shoot.mjs  # screenshot walk + overflow/console assertions
+node scripts/shoot.mjs        # screenshot walk + overflow/console assertions
+node scripts/measure-cards.mjs  # natural card heights, for the min-height floors
 ```
 
 `scripts/shoot.mjs` runs the pre-ship checks against the real build: every act

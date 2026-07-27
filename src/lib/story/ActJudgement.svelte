@@ -1,7 +1,7 @@
 <script>
   import Scrolly from "../components/Scrolly.svelte";
   import StoppedClock from "../components/StoppedClock.svelte";
-  import BaseRate from "../components/BaseRate.svelte";
+  import CandleRack from "../components/CandleRack.svelte";
 
   let { data } = $props();
   let currentStep = $state(0);
@@ -11,9 +11,9 @@
 </script>
 
 <section
-  class="act"
+  class="act mat-bill"
   aria-label="Judgement: the doomers"
-  style="--act-accent: var(--ink-brass); --step-min: 320px; --step-min-mobile: 390px;"
+  style="--act-accent: var(--ink-brass); --step-min: 377px; --step-min-mobile: 389px;"
 >
   <div class="act-head">
     <p class="act-kicker">Judgement</p>
@@ -27,12 +27,12 @@
 
   <Scrolly onStepChange={(i) => (currentStep = i)}>
     {#snippet visual()}
-      <div class="visual-frame-stack" style="--stack-height: 430px; --stack-height-mobile: clamp(300px, 44svh, 400px);">
+      <div class="visual-frame-stack" style="--stack-height: 445px; --stack-height-mobile: clamp(300px, 44svh, 400px);">
         <div class="frame" class:is-active={onClock}>
           <StoppedClock data={d} step={currentStep} />
         </div>
         <div class="frame" class:is-active={!onClock}>
-          <BaseRate data={d} step={currentStep - 3} />
+          <CandleRack data={d} step={currentStep - 3} />
         </div>
       </div>
     {/snippet}

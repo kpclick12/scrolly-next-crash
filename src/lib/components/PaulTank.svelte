@@ -132,7 +132,7 @@
     fill: var(--text-primary);
   }
   .score {
-    font-family: var(--serif);
+    font-family: var(--display);
     font-size: 16px;
     font-weight: 700;
     fill: var(--text-primary);

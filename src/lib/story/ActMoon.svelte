@@ -9,9 +9,9 @@
 </script>
 
 <section
-  class="act"
+  class="act mat-pad"
   aria-label="The Moon: the psychology"
-  style="--act-accent: var(--ink-violet); --step-min: 300px; --step-min-mobile: 360px;"
+  style="--act-accent: var(--ink-violet); --step-min: 344px; --step-min-mobile: 431px;"
 >
   <div class="act-head">
     <p class="act-kicker">The Moon</p>
@@ -25,7 +25,7 @@
 
   <Scrolly onStepChange={(i) => (currentStep = i)}>
     {#snippet visual()}
-      <div class="visual-frame-stack" style="--stack-height: 430px; --stack-height-mobile: clamp(290px, 42svh, 390px);">
+      <div class="visual-frame-stack" style="--stack-height: 425px; --stack-height-mobile: clamp(290px, 42svh, 390px);">
         <div class="frame is-active">
           <CouchHerd step={currentStep} />
         </div>

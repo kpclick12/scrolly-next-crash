@@ -1,7 +1,7 @@
 <script>
   import Scrolly from "../components/Scrolly.svelte";
   import BookShelf from "../components/BookShelf.svelte";
-  import RecessionWaffle from "../components/RecessionWaffle.svelte";
+  import CardSpread from "../components/CardSpread.svelte";
 
   let { data } = $props();
   let currentStep = $state(0);
@@ -12,9 +12,9 @@
 </script>
 
 <section
-  class="act"
+  class="act mat-book"
   aria-label="The Magician: the prediction business"
-  style="--act-accent: var(--ink-blue); --step-min: 340px; --step-min-mobile: 400px;"
+  style="--act-accent: var(--ink-blue); --step-min: 376px; --step-min-mobile: 415px;"
 >
   <div class="act-head">
     <p class="act-kicker">The Magician</p>
@@ -28,12 +28,12 @@
 
   <Scrolly onStepChange={(i) => (currentStep = i)}>
     {#snippet visual()}
-      <div class="visual-frame-stack" style="--stack-height: 430px; --stack-height-mobile: clamp(300px, 44svh, 400px);">
+      <div class="visual-frame-stack" style="--stack-height: 475px; --stack-height-mobile: clamp(310px, 45svh, 415px);">
         <div class="frame" class:is-active={onShelf}>
           <BookShelf books={f.books} step={currentStep} />
         </div>
         <div class="frame" class:is-active={!onShelf}>
-          <RecessionWaffle data={f.recessions} step={currentStep - 4} />
+          <CardSpread data={f.recessions} step={currentStep - 4} />
         </div>
       </div>
     {/snippet}

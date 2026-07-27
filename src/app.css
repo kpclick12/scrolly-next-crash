@@ -1,58 +1,103 @@
-/* Self-hosted font (GDPR-friendly — no third-party requests). Variable weight 400-900. */
+/* Self-hosted fonts (GDPR — no third-party requests, ever). Both variable.
+   Cinzel is Roman inscriptional capitals: it is, more or less, the lettering
+   on a tarot card, and it does all the display work here. EB Garamond is the
+   old-style body face underneath it — warm, readable at length, and from
+   roughly the century the first of these books was printed in. */
 @font-face {
-  font-family: "Playfair Display";
+  font-family: "Cinzel";
   font-style: normal;
   font-weight: 400 900;
   font-display: swap;
-  src: url("/fonts/playfair-display-latin.woff2") format("woff2");
+  src: url("/fonts/cinzel-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: "Playfair Display";
-  font-style: italic;
+  font-family: "Cinzel";
+  font-style: normal;
   font-weight: 400 900;
   font-display: swap;
-  src: url("/fonts/playfair-display-latin-italic.woff2") format("woff2");
+  src: url("/fonts/cinzel-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "EB Garamond";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/ebgaramond-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "EB Garamond";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/ebgaramond-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "EB Garamond";
+  font-style: italic;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/ebgaramond-latin-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 :root {
   /* Fortune-teller's parlour: tarot-card parchment for the page, deep velvet
-     indigo for the surfaces that are always dark (the 3D hero and the closing
-     band), and brass for the chrome. Sibling of scrolly-wealth's warm cream
-     and scrolly-monopoly's game-night paper — this one goes cooler and
-     dustier, like a card that has been handled a lot. */
+     indigo for the surfaces that are always dark, brass for the chrome. */
   --surface-1: #faf5ea;
   --page-plane: #f0e9db;
   --text-primary: #211d2b;
-  --text-secondary: #4b445c;
-  --text-muted: #736c85;
+  --text-secondary: #443d55;
+  --text-muted: #6f6880;
   --gridline: #e4dccb;
   --baseline: #c1b7a4;
   --border: rgba(33, 29, 43, 0.13);
 
   /* Velvet surfaces — the séance table. Always dark regardless of the OS
-     color-scheme; these back the hero, the interlude and the closing, which
-     never go "paper". */
+     colour-scheme; these back the hero, the interlude and the closing. */
   --velvet: #241a44;
   --velvet-deep: #120c22;
   --brass: #d9a441;
   --brass-deep: #a87c22;
   --parlour-cream: #f3e8d2;
 
-  /* Categorical chart palette — one hue per crash, fixed order, never cycled.
-     Validated with the dataviz skill's validator against the parchment surface
-     above, all-pairs (not just adjacent):
+  /* Materials the step cards are printed on. Each act picks one — the copy in
+     act one is a 1929 newspaper clipping, act three is a doomsday handbill,
+     and so on. Declared here so the palette stays in one place. */
+  --newsprint: #e7dfcb;
+  --newsprint-ink: #2b2519;
+  --bookpage: #f7f1e2;
+  --handbill: #f4ead3;
+  --notepad: #fbf8ec;
+  --notepad-rule: #cfd8e4;
+  --tarot: #f8f2e4;
+
+  /* Categorical chart palette — fixed order, never cycled. Validated with the
+     dataviz skill's validator against the parchment surface, ALL PAIRS:
        node scripts/validate_palette.js "#2a78d6,#d93a2b,#0f8f63" \
          --mode light --surface "#faf5ea" --pairs all
      → every check PASSES: lightness band, chroma floor, CVD separation
-       (worst pair green↔red ΔE 8.8 deutan), normal-vision floor, and 3:1
-       contrast against the surface.
+       (worst pair green↔red ΔE 8.8 deutan), normal-vision floor, 3:1 contrast.
 
      WHAT DOES NOT SURVIVE IS THE DIMMED STATE. Flattened at 48% over the
-     parchment these become #96b9e0 / #ea9b8e / #89c4a9, and the worst pair
+     parchment these become #96b9e0 / #ea9b8e / #89c4a9 and the worst pair
      falls to ΔE 4.1 — indistinguishable, exactly the failure the skill warns
-     about. So de-emphasis in this piece never carries identity: every series
-     keeps an always-on direct label, and dimming only ever means "not the one
-     being talked about right now". */
+     about. So de-emphasis never carries identity here: every mark keeps an
+     always-on direct label, and dimming only ever means "not the one being
+     talked about right now". */
   --series-blue: #2a78d6;
   --series-red: #d93a2b;
   --series-green: #0f8f63;
@@ -65,12 +110,16 @@
   --ink-violet: #6d3f9e;
   --ink-brass: #7a5a10;
 
-  --serif: "Playfair Display", Georgia, "Times New Roman", "Liberation Serif", serif;
-  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --display: "Cinzel", "Trajan Pro", Georgia, "Times New Roman", serif;
+  --body: "EB Garamond", Georgia, "Iowan Old Style", "Times New Roman", serif;
+  /* Kept for tabular figures and the few places that need a plain UI face. */
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   --accent: var(--ink-violet);
 
-  font: 16px/1.55 var(--sans);
+  /* EB Garamond runs small for its point size, so the base is set larger than
+     a sans-serif page would be and the line height a touch tighter. */
+  font: 18.5px/1.6 var(--body);
   color-scheme: light dark;
   color: var(--text-primary);
   background: var(--page-plane);
@@ -87,18 +136,28 @@
     --surface-1: #1c1533;
     --page-plane: #120c22;
     --text-primary: #efe9dd;
-    --text-secondary: #c6bfd3;
-    --text-muted: #948da6;
+    --text-secondary: #cdc6da;
+    --text-muted: #9a93ac;
     --gridline: #2a2148;
     --baseline: #453a68;
-    --border: rgba(239, 233, 221, 0.13);
+    --border: rgba(239, 233, 221, 0.14);
+
+    /* The materials go to their night versions — still distinguishable from
+       each other, which is the whole point of having five of them. */
+    --newsprint: #241f33;
+    --newsprint-ink: #d9d2c2;
+    --bookpage: #1e1838;
+    --handbill: #2a2036;
+    --notepad: #191430;
+    --notepad-rule: #2f3a52;
+    --tarot: #221a3e;
 
     /* Re-stepped for the velvet surface, not flipped. Validated separately:
          node scripts/validate_palette.js "#3987e5,#e05a45,#14a583" \
            --mode dark --surface "#1c1533" --pairs all
-       → every check PASSES, worst pair green↔red ΔE 9.1 deutan.
-       Getting here needed real re-stepping: the dark lightness band is only
-       0.48–0.67, and the light palette's own hues fall straight out of it. */
+       → every check PASSES, worst pair green↔red ΔE 9.1 deutan. Getting here
+       needed real re-stepping: the dark lightness band is only 0.48–0.67 and
+       the light palette's own hues fall straight out of it. */
     --series-blue: #3987e5;
     --series-red: #e05a45;
     --series-green: #14a583;
@@ -119,9 +178,9 @@ body {
   margin: 0;
 }
 
-/* Last line of defense, not the fix: if some future element still forces a
-   descendant wider than the viewport, clip it here instead of letting the
-   whole page grow a horizontal scrollbar. The real fixes are the min-width:0 /
+/* Last line of defence, not the fix: if some future element still forces a
+   descendant wider than the viewport, clip it here rather than let the whole
+   page grow a horizontal scrollbar. The real fixes are the min-width:0 /
    minmax(0, 1fr) declarations in the grid and flex layouts. */
 html,
 body {
@@ -129,8 +188,8 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: var(--sans);
-  font-weight: 600;
+  font-family: var(--display);
+  font-weight: 700;
   color: var(--text-primary);
 }
 
@@ -139,29 +198,23 @@ p {
   color: var(--text-secondary);
 }
 
-/* Inline colored word — ties a word in the prose to a mark in the chart. */
+/* Inline coloured word — ties a word in the prose to a mark in the visual. */
 .badge {
   display: inline-block;
-  padding: 1px 8px;
+  padding: 0 7px;
   font-weight: 700;
+  font-family: var(--display);
+  font-size: 0.86em;
+  letter-spacing: 0.02em;
   border-radius: 2px;
   color: #ffffff;
 }
-.badge-red {
-  background: var(--series-red);
-  color: #fff6f4;
-}
-.badge-blue {
-  background: var(--series-blue);
-  color: #f3f8ff;
-}
-.badge-green {
-  background: var(--series-green);
-  color: #f2fbf7;
-}
+.badge-red { background: var(--series-red); color: #fff6f4; }
+.badge-blue { background: var(--series-blue); color: #f3f8ff; }
+.badge-green { background: var(--series-green); color: #f2fbf7; }
 
 /* Visible keyboard focus everywhere by default — dark ink on the parchment.
-   The permanently dark sections override this locally with a brass ring. */
+   Permanently dark sections override this locally with a brass ring. */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
@@ -172,7 +225,7 @@ select:focus-visible,
 }
 
 /* Respect the reduced-motion system setting. The 3D hero checks the same
-   media query in JS and slows its ambient time to a crawl. */
+   media query in JS and drops its ambient drift entirely. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -183,154 +236,455 @@ select:focus-visible,
   }
 }
 
-/* ---------------------------------------------------------------------
-   Shared scrolly-step card styles.
-   Declared ONCE here so every act stays visually consistent. Each act sets
-   --act-accent on its own wrapper; the border and the kicker both read that
-   one variable, so an act can never end up with a mismatched pair.
+/* =====================================================================
+   STEP CARDS
+
+   There is no single card style in this piece. Each act's copy is printed
+   on the material its subject belongs to — a 1929 newspaper, a book page,
+   a doomsday handbill, an analyst's notepad, a tarot card — and the act
+   opts in with one class on its wrapper (.mat-news, .mat-book, and so on).
+
+   What every material shares is only the structural part: a min-height
+   floor so the column doesn't drift, the inactive/active opacity, and the
+   full-bleed treatment under 860px. Everything else is per material.
+
    Acts must NOT redeclare these selectors in their own <style> — they are
    global, and the last act mounted would win for every act on the page.
------------------------------------------------------------------------- */
+===================================================================== */
 .act {
   --act-pad-x: 24px;
   padding-inline: var(--act-pad-x);
+  /* The book-page material numbers its own leaves; the counter restarts with
+     each act so the folio numbers are the act's, not the page's. */
+  counter-reset: folio;
 }
 .scrolly-step {
-  background: var(--surface-1);
-  border-left: 6px solid var(--act-accent, var(--ink-violet));
-  padding: 28px 32px;
-  border-radius: 4px;
-  box-shadow: 0 2px 10px rgba(18, 12, 34, 0.1);
+  position: relative;
   min-width: 0;
-  /* Uniform height within an act. Without a floor, card height follows
-     paragraph length and the column drifts by 100–200px as you scroll, which
-     reads as sloppy. Each act sets --step-min / --step-min-mobile from its
-     own tallest card. */
   min-height: var(--step-min, 0);
+  padding: 30px 34px;
 }
 .scrolly-step > * {
-  opacity: 0.35;
+  opacity: 0.34;
   transition: opacity 0.3s ease;
 }
 .scrolly-step.is-active > * {
   opacity: 1;
 }
-.scrolly-step .kicker {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--act-accent, var(--ink-violet));
-  margin: 0 0 8px;
-  font-weight: 700;
-}
+/* Decorative layers (rules, folio numbers, torn edges) sit in ::before and
+   ::after so they are not caught by the opacity rule above — the paper stays
+   solid while only the type dims. */
+
 .scrolly-step h3 {
-  font-family: var(--serif);
-  margin: 0 0 14px;
+  font-family: var(--display);
+  margin: 0 0 15px;
   font-size: 23px;
-  line-height: 1.25;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.005em;
 }
+/* EB Garamond runs small for its point size, so 17px here is roughly a
+   sans-serif 15px. Sized down from 18 deliberately: at 18 the tallest card in
+   an act ran past 490px on a phone, and every other card in the act has to
+   match the tallest. */
 .scrolly-step p {
   margin: 0 0 12px;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 17px;
+  line-height: 1.58;
 }
 .scrolly-step p:last-child {
   margin-bottom: 0;
 }
+/* The beat label. Set in Cinzel small-caps rather than a coloured kicker —
+   it reads as an inscription on whatever the card is printed on. */
+.scrolly-step .kicker {
+  font-family: var(--display);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--act-accent, var(--ink-violet));
+  margin: 0 0 10px;
+  font-weight: 700;
+}
 .scrolly-step .callout {
   display: flex;
   align-items: baseline;
-  gap: 12px;
-  margin: 14px 0 12px;
-  padding: 12px 16px;
-  background: var(--page-plane);
-  border-radius: 6px;
+  gap: 14px;
+  margin: 16px 0 13px;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--border);
 }
 .scrolly-step .callout-num {
-  font-family: var(--serif);
-  font-size: 30px;
-  font-weight: 700;
+  font-family: var(--display);
+  font-size: 32px;
+  font-weight: 800;
   color: var(--act-accent, var(--ink-violet));
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums lining-nums;
   white-space: nowrap;
   line-height: 1;
 }
 .scrolly-step .callout-label {
-  font-size: 13px;
+  font-size: 14.5px;
   line-height: 1.45;
   color: var(--text-secondary);
 }
 /* A card that is one line and nothing else — the beat that lets the reader
-   breathe. It keeps the act's min-height so the column stays even. */
+   breathe. Keeps the act's min-height so the column stays even. */
 .scrolly-step.beat {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 .scrolly-step.beat h3 {
-  font-size: 27px;
+  font-size: 30px;
   margin-bottom: 0;
 }
+
+/* ---- MATERIAL 1 · newsprint (act one, the crashes) ------------------
+   A clipping torn from the paper. Ragged bottom edge, hairline column rule
+   down the left, ink that is slightly warmer and heavier than the page. */
+.mat-news .scrolly-step {
+  background: var(--newsprint);
+  color: var(--newsprint-ink);
+  box-shadow: 2px 3px 0 rgba(33, 29, 43, 0.09);
+  /* The torn bottom edge, cut into the box itself. */
+  clip-path: polygon(
+    0 0, 100% 0, 100% calc(100% - 9px),
+    92% 100%, 84% calc(100% - 7px), 75% calc(100% - 1px), 66% calc(100% - 8px),
+    57% calc(100% - 2px), 48% calc(100% - 9px), 39% calc(100% - 3px),
+    30% calc(100% - 8px), 21% calc(100% - 1px), 12% calc(100% - 7px),
+    5% calc(100% - 2px), 0 calc(100% - 8px)
+  );
+  padding-bottom: 40px;
+}
+.mat-news .scrolly-step::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 18px;
+  bottom: 34px;
+  width: 1px;
+  background: rgba(43, 37, 25, 0.28);
+}
+.mat-news .scrolly-step h3 {
+  font-size: 27px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  font-weight: 900;
+  color: var(--newsprint-ink);
+}
+.mat-news .scrolly-step p {
+  color: color-mix(in srgb, var(--newsprint-ink) 88%, transparent);
+}
+/* The clipping is MONOCHROME on purpose — a 1929 front page had one ink, and
+   the act accent is deliberately overridden here rather than lost to
+   specificity. The only colour allowed through is a .badge, which exists to
+   tie a word in the prose to a mark in the figure and has to survive. */
+.mat-news .scrolly-step .kicker,
+.mat-news .scrolly-step .callout-num {
+  color: var(--newsprint-ink);
+}
+.mat-news .scrolly-step .callout {
+  border-top: 2px solid color-mix(in srgb, var(--newsprint-ink) 40%, transparent);
+}
+.mat-news .scrolly-step .callout-label {
+  color: color-mix(in srgb, var(--newsprint-ink) 80%, transparent);
+}
+.mat-news .scrolly-step .kicker {
+  font-size: 10.5px;
+  border-bottom: 2px solid currentColor;
+  display: inline-block;
+  padding-bottom: 3px;
+}
+
+/* ---- MATERIAL 2 · book page (act two, the prediction business) ------
+   A leaf from one of the four books on the shelf: a running head, a rule
+   under it, and a folio number centred at the foot. */
+.mat-book .scrolly-step {
+  background: var(--bookpage);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 0 var(--border), 0 10px 26px rgba(18, 12, 34, 0.07);
+  padding-top: 46px;
+  padding-bottom: 46px;
+  counter-increment: folio;
+}
+.mat-book .scrolly-step::before {
+  content: "ON THE PREDICTION OF DISASTERS";
+  position: absolute;
+  top: 18px;
+  left: 34px;
+  right: 34px;
+  font-family: var(--display);
+  font-size: 9.5px;
+  letter-spacing: 0.28em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mat-book .scrolly-step::after {
+  content: counter(folio);
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--body);
+  font-size: 14px;
+  font-variant-numeric: oldstyle-nums;
+  color: var(--text-muted);
+}
+.mat-book .scrolly-step h3 {
+  font-size: 22px;
+}
+/* A drop cap on the body copy, because it is a book page. Anchored to the
+   paragraph AFTER the heading — `p:first-of-type` matches the .kicker, which
+   put a giant initial on the two-word beat label instead. */
+.mat-book .scrolly-step h3 + p::first-letter {
+  font-family: var(--display);
+  font-size: 3.05em;
+  line-height: 0.84;
+  float: left;
+  padding: 4px 9px 0 0;
+  color: var(--ink-blue);
+  font-weight: 700;
+}
+
+/* ---- MATERIAL 3 · handbill (act three, the doomers) -----------------
+   A prophecy pasted on a wall. Heavy top and bottom rules, everything
+   shouted, the paper faintly foxed. */
+.mat-bill .scrolly-step {
+  background: var(--handbill);
+  border-top: 7px solid var(--ink-brass);
+  border-bottom: 7px solid var(--ink-brass);
+  box-shadow: 0 8px 22px rgba(18, 12, 34, 0.1);
+  text-align: center;
+  padding: 26px 30px 30px;
+}
+.mat-bill .scrolly-step::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 6px;
+  border-top: 1.5px solid var(--ink-brass);
+  opacity: 0.55;
+}
+.mat-bill .scrolly-step::after {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--ink-brass);
+}
+.mat-bill .scrolly-step h3 {
+  text-transform: uppercase;
+  font-size: 24px;
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+.mat-bill .scrolly-step .kicker {
+  letter-spacing: 0.34em;
+}
+.mat-bill .scrolly-step .callout {
+  justify-content: center;
+  text-align: left;
+  border-top: 2px solid var(--ink-brass);
+}
+.mat-bill .scrolly-step p {
+  text-wrap: balance;
+}
+
+/* ---- MATERIAL 4 · notepad (act four, the psychology) ----------------
+   A page from the pad on the analyst's floor. Ruled lines and a margin. */
+.mat-pad .scrolly-step {
+  background: var(--notepad);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 28px,
+    var(--notepad-rule) 28px,
+    var(--notepad-rule) 29px
+  );
+  background-position: 0 34px;
+  border: 1px solid var(--border);
+  border-radius: 2px 2px 10px 2px;
+  box-shadow: 0 8px 20px rgba(18, 12, 34, 0.09);
+  padding-left: 52px;
+}
+/* The red margin rule, and the punch holes. */
+.mat-pad .scrolly-step::before {
+  content: "";
+  position: absolute;
+  left: 38px;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  background: color-mix(in srgb, var(--series-red) 45%, transparent);
+}
+.mat-pad .scrolly-step::after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 44px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--page-plane);
+  box-shadow: 0 74px 0 var(--page-plane), 0 148px 0 var(--page-plane);
+  border: 1px solid var(--border);
+}
+.mat-pad .scrolly-step h3 {
+  font-size: 22px;
+}
+
+/* ---- MATERIAL 5 · tarot card (act five, choose your oracle) ---------
+   A card off the table: double-rule border, corner fleurons, and the beat
+   name set as the card's own title along the foot. */
+.mat-card .scrolly-step {
+  background: var(--tarot);
+  border: 1.5px solid var(--ink-brass);
+  border-radius: 8px;
+  box-shadow: 0 10px 26px rgba(18, 12, 34, 0.13);
+  padding: 34px 32px 44px;
+}
+.mat-card .scrolly-step::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid color-mix(in srgb, var(--ink-brass) 46%, transparent);
+  border-radius: 4px;
+  pointer-events: none;
+}
+/* The corner fleurons and the card's foot rule. */
+.mat-card .scrolly-step::after {
+  content: "✦ ✦ ✦";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  text-align: center;
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  color: color-mix(in srgb, var(--ink-brass) 78%, transparent);
+}
+.mat-card .scrolly-step .kicker {
+  text-align: center;
+  letter-spacing: 0.3em;
+  color: var(--ink-brass);
+}
+.mat-card .scrolly-step h3 {
+  text-align: center;
+  font-size: 23px;
+}
+.mat-card .scrolly-step .callout {
+  border-top: 1px solid color-mix(in srgb, var(--ink-brass) 40%, transparent);
+}
+
+/* ---- Full-bleed on mobile, whatever the material --------------------
+   The card spans edge to edge, cancelling the act's gutter. On a 360px
+   screen this recovers ~48px of line width. Radii and side ornament go,
+   because a rounded corner flush against the viewport edge reads as a bug. */
 @media (max-width: 860px) {
-  /* Full-bleed: the card spans edge to edge, cancelling the act's gutter.
-     On a 360px screen this recovers ~48px of line width. Rounded corners
-     flush against the viewport edge read as a bug, so the radius goes; a
-     hairline top/bottom rule and a deeper shadow replace the "surface sitting
-     on the page" cue that the side gaps used to give. */
   .scrolly-step {
     width: calc(100% + 2 * var(--act-pad-x));
     margin-inline: calc(-1 * var(--act-pad-x));
-    padding: 22px 20px;
-    border-radius: 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    box-shadow: 0 6px 20px rgba(18, 12, 34, 0.16);
+    padding: 24px 20px;
     min-height: var(--step-min-mobile, 0);
   }
-  .scrolly-step h3 {
-    font-size: 20px;
+  .scrolly-step h3 { font-size: 21px; }
+  .scrolly-step p { font-size: 16.5px; }
+  .scrolly-step.beat h3 { font-size: 24px; }
+
+  .mat-news .scrolly-step { padding: 24px 20px 34px; }
+  .mat-news .scrolly-step::before { left: 9px; }
+  .mat-news .scrolly-step h3 { font-size: 24px; }
+
+  .mat-book .scrolly-step {
+    border-radius: 0;
+    padding: 42px 20px 42px;
   }
-  .scrolly-step.beat h3 {
-    font-size: 23px;
+  .mat-book .scrolly-step::before { left: 20px; right: 20px; }
+
+  .mat-bill .scrolly-step { padding: 22px 18px 28px; }
+  .mat-bill .scrolly-step h3 { font-size: 23px; }
+
+  .mat-pad .scrolly-step {
+    border-radius: 0;
+    padding-left: 44px;
   }
+  .mat-pad .scrolly-step::before { left: 32px; }
+  .mat-pad .scrolly-step::after { left: 9px; }
+
+  .mat-card .scrolly-step {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding: 28px 20px 40px;
+  }
+  .mat-card .scrolly-step::before { inset: 5px 8px; }
 }
 
-/* ---------------------------------------------------------------------
-   Shared act header. The kicker is a tarot card — the conceit's spine.
------------------------------------------------------------------------- */
+/* =====================================================================
+   ACT HEADER — a tarot card being named as it is turned over.
+===================================================================== */
 .act-head {
-  max-width: 640px;
+  max-width: 660px;
   margin: 0 auto;
   /* Horizontal inset comes from .act's --act-pad-x, so the gutter is defined
      in exactly one place. */
-  padding: 110px 0 40px;
+  padding: 118px 0 44px;
   text-align: center;
 }
 .act-head .act-kicker {
-  font-size: 13px;
+  font-family: var(--display);
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.42em;
   font-weight: 700;
   color: var(--act-accent, var(--ink-violet));
-  margin: 0 0 10px;
+  margin: 0 0 18px;
+  /* Rules either side of the card name, the way a title page sets one. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.act-head .act-kicker::before,
+.act-head .act-kicker::after {
+  content: "";
+  height: 1px;
+  width: clamp(24px, 12%, 64px);
+  background: currentColor;
+  opacity: 0.5;
 }
 .act-head h2 {
-  font-family: var(--serif);
-  font-size: clamp(30px, 5vw, 44px);
-  line-height: 1.1;
-  margin: 0 0 16px;
+  font-family: var(--display);
+  font-size: clamp(31px, 5.2vw, 50px);
+  line-height: 1.06;
+  margin: 0 0 18px;
+  font-weight: 700;
 }
 .act-head .act-dek {
-  font-size: 16.5px;
+  font-size: 19px;
   line-height: 1.6;
   color: var(--text-secondary);
+  font-style: italic;
 }
 
-/* ---------------------------------------------------------------------
-   Visual frame stack — the sticky-panel crossfade. All slot components stay
-   MOUNTED at once; only opacity/visibility toggle between them, and the outer
-   box has an explicit height (set per act) so swapping never shifts layout.
------------------------------------------------------------------------- */
+/* =====================================================================
+   VISUAL FRAME STACK — the sticky-panel crossfade. All slot components
+   stay MOUNTED at once; only opacity/visibility toggle between them, and
+   the outer box has an explicit height (set per act) so swapping never
+   shifts layout.
+===================================================================== */
 .visual-frame-stack {
   position: relative;
   width: 100%;
@@ -355,8 +709,8 @@ select:focus-visible,
   .visual-frame-stack {
     height: var(--stack-height-mobile, 360px);
   }
-  /* Anchor content to the TOP of the panel on mobile instead of centering it
-     — the sticky panel is pinned at the top of the viewport while step cards
+  /* Anchor content to the TOP of the panel on mobile instead of centring it —
+     the sticky panel is pinned at the top of the viewport while step cards
      slide up over it from below, so top-anchoring keeps the least content at
      risk of ending up underneath an incoming card. */
   .visual-frame-stack > .frame {
@@ -366,18 +720,21 @@ select:focus-visible,
   }
 }
 
-/* ---------------------------------------------------------------------
-   Shared chart figure — every hand-built SVG sits in one of these.
------------------------------------------------------------------------- */
+/* =====================================================================
+   SHARED FIGURE — every hand-built scene sits in one of these.
+===================================================================== */
 .chart {
   margin: 0;
-  width: min(620px, 100%);
+  width: min(640px, 100%);
 }
 .chart figcaption {
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: 6px;
+  font-family: var(--display);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
 }
 .chart svg {
   width: 100%;
@@ -386,8 +743,9 @@ select:focus-visible,
   display: block;
 }
 .chart .note {
-  font-size: 12px;
+  font-size: 14.5px;
   line-height: 1.5;
   color: var(--text-muted);
-  margin: 8px 0 0;
+  margin: 9px 0 0;
+  font-style: italic;
 }

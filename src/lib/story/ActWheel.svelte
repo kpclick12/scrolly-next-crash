@@ -1,6 +1,6 @@
 <script>
   import Scrolly from "../components/Scrolly.svelte";
-  import OracleBoard from "../components/OracleBoard.svelte";
+  import FortuneWheel from "../components/FortuneWheel.svelte";
   import PaulTank from "../components/PaulTank.svelte";
 
   let { data } = $props();
@@ -13,25 +13,28 @@
 </script>
 
 <section
-  class="act"
+  class="act mat-card"
   aria-label="Wheel of Fortune: who to trust"
-  style="--act-accent: var(--ink-green); --step-min: 350px; --step-min-mobile: 420px;"
+  style="--act-accent: var(--ink-green); --step-min: 393px; --step-min-mobile: 506px;"
 >
   <div class="act-head">
     <p class="act-kicker">Wheel of Fortune</p>
     <h2>Choose your oracle</h2>
     <p class="act-dek">
       Five forecasters, five real records with real denominators. Watch what
-      happens when you put them on the same axis — and then watch what that
-      tells you about every ranking you have ever been shown.
+      happens when you hang all five on the same wheel — and then watch what
+      that tells you about every ranking you have ever been shown.
     </p>
   </div>
 
   <Scrolly onStepChange={(i) => (currentStep = i)}>
     {#snippet visual()}
-      <div class="visual-frame-stack" style="--stack-height: 430px; --stack-height-mobile: clamp(300px, 44svh, 400px);">
+      <!-- The wheel is the tallest visual in the piece, so this act gets the
+           tallest stack. Both frames still share one fixed height — a stack
+           that resizes on swap shifts layout mid-scroll. -->
+      <div class="visual-frame-stack" style="--stack-height: 515px; --stack-height-mobile: clamp(320px, 48svh, 430px);">
         <div class="frame" class:is-active={onBoard}>
-          <OracleBoard data={o} step={boardStep} />
+          <FortuneWheel data={o} step={boardStep} />
         </div>
         <div class="frame" class:is-active={!onBoard}>
           <PaulTank paul={o.paul} step={currentStep - 6} />
@@ -40,14 +43,14 @@
     {/snippet}
 
     <section class="scrolly-step">
-      <p class="kicker">The scoreboard</p>
-      <h3>Everyone gets a bar</h3>
+      <p class="kicker">The wheel</p>
+      <h3>Everyone gets a seat</h3>
       <p>
-        Nobody here is invented and nothing here is estimated. Each bar is a
-        count of hits over a count of attempts, published by someone who wrote
-        the denominator down.
+        Nobody here is invented and nothing here is estimated. Each rider sits at
+        a count of hits over a count of attempts, published by someone who
+        wrote the denominator down.
       </p>
-      <p>Keep an eye on what each bar is actually counting.</p>
+      <p>Keep an eye on what each one is actually counting.</p>
     </section>
 
     <section class="scrolly-step">
@@ -125,15 +128,16 @@
 
     <section class="scrolly-step">
       <p class="kicker">The catch</p>
-      <h3>This chart is rubbish, and so are most of the others</h3>
+      <h3>This wheel is rubbish, and so are most of the charts</h3>
       <p>
-        Five bars, five completely different tests. Recessions and football
-        matches and stock-picking rounds do not belong on one axis, and the
-        moment you put them there the ranking starts to look like a finding.
+        Five riders, five completely different tests. Recessions and football
+        matches and stock-picking rounds do not belong on one rim, and the
+        moment you hang them there the ranking starts to look like a finding.
       </p>
       <p>
-        That is the actual lesson of the scoreboard: it looked authoritative
-        the whole way down, and you were already comparing the bars.
+        A fairground wheel at least has the decency to look like one. Most charts
+        that do exactly this arrive in a neat grid with an axis, and you were
+        comparing the heights before you ever asked what they measured.
       </p>
     </section>
 
