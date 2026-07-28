@@ -17,34 +17,41 @@ import { fileURLToPath } from "node:url";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (p) => JSON.parse(readFileSync(join(ROOT, p), "utf8"));
 
-const oracles = read("src/data/oracles.json");
+const roster = read("src/data/roster.json");
 const forecasts = read("src/data/forecasts.json");
 
 // ---- Assertions. If any of these fail the numbers moved and the title lies.
-const by = Object.fromEntries(oracles.oracles.map((o) => [o.id, o]));
+// Only the characters with a published record can appear on a bar chart at
+// all; the three without one are the subtitle's point, not a bar.
+const scored = roster.characters.filter((c) => c.pct !== null);
+const unscored = roster.characters.filter((c) => c.pct === null);
+const by = Object.fromEntries(scored.map((c) => [c.id, c]));
 const fail = [];
 
-if (by.paul.pct !== Math.round((by.paul.hits / by.paul.attempts) * 100)) {
-  fail.push(`paul.pct ${by.paul.pct} does not match ${by.paul.hits}/${by.paul.attempts}`);
-}
-if (by.economists.pct !== Math.round((by.economists.hits / by.economists.attempts) * 100)) {
-  fail.push(`economists.pct does not match its own counts`);
-}
-// The title says the octopus is top and the economists are bottom. Check it.
-const ranked = [...oracles.oracles].sort((a, b) => b.pct - a.pct);
-if (ranked[0].id !== "paul") fail.push(`title claims the octopus ranks first; ${ranked[0].id} does`);
-if (ranked[ranked.length - 1].id !== "economists") {
-  fail.push(`title claims economists rank last; ${ranked[ranked.length - 1].id} does`);
-}
-// The subtitle quotes the IMF study's counts; they must be the ones on file.
-if (forecasts.recessions.total !== by.economists.attempts || forecasts.recessions.predicted !== by.economists.hits) {
-  fail.push(`the economists row and forecasts.json disagree about the IMF counts`);
-}
-// And the claim that every row is a real fraction, not a vibe.
-for (const o of oracles.oracles) {
-  if (!Number.isInteger(o.hits) || !Number.isInteger(o.attempts) || o.attempts <= 0) {
-    fail.push(`${o.id} has no honest denominator`);
+for (const c of scored) {
+  if (c.pct !== Math.round((c.hits / c.attempts) * 100)) {
+    fail.push(`${c.id}: pct ${c.pct} does not match ${c.hits}/${c.attempts}`);
   }
+  if (!Number.isInteger(c.hits) || !Number.isInteger(c.attempts) || c.attempts <= 0) {
+    fail.push(`${c.id} has no honest denominator`);
+  }
+}
+// The title claims the octopus beats every economist here, and the subtitle
+// claims three of the eight have no record. Check both.
+const ranked = [...scored].sort((a, b) => b.pct - a.pct);
+if (ranked[0].id !== "paul") fail.push(`title claims the octopus ranks first; ${ranked[0].id} does`);
+if (ranked[ranked.length - 1].id !== "economist") {
+  fail.push(`title claims the economist ranks last; ${ranked[ranked.length - 1].id} does`);
+}
+if (unscored.length !== 3) {
+  fail.push(`subtitle says three of the eight have no published record; ${unscored.length} do`);
+}
+if (roster.characters.length !== 8) {
+  fail.push(`the roster is meant to be eight players; it is ${roster.characters.length}`);
+}
+// The economist row quotes the IMF study's counts.
+if (forecasts.recessions.total !== by.economist.attempts || forecasts.recessions.predicted !== by.economist.hits) {
+  fail.push(`the economist row and forecasts.json disagree about the IMF counts`);
 }
 
 if (fail.length) {
@@ -54,17 +61,15 @@ if (fail.length) {
 
 // ---- The page. Same tokens as app.css, inlined so this file stands alone.
 const b64 = (f) => readFileSync(join(ROOT, "public/fonts", f)).toString("base64");
-const cinzel = b64("cinzel-latin.woff2");
-const garamond = b64("ebgaramond-latin.woff2");
-const garamondItalic = b64("ebgaramond-latin-italic.woff2");
+const fraunces = b64("fraunces-latin.woff2");
+const figtree = b64("figtree-latin.woff2");
 const FACES = `
-@font-face{font-family:"Cinzel";font-weight:400 900;src:url(data:font/woff2;base64,${cinzel}) format("woff2");}
-@font-face{font-family:"EB Garamond";font-weight:400 800;src:url(data:font/woff2;base64,${garamond}) format("woff2");}
-@font-face{font-family:"EB Garamond";font-style:italic;font-weight:400 800;src:url(data:font/woff2;base64,${garamondItalic}) format("woff2");}
+@font-face{font-family:"Fraunces";font-weight:400 900;src:url(data:font/woff2;base64,${fraunces}) format("woff2");}
+@font-face{font-family:"Figtree";font-weight:300 900;src:url(data:font/woff2;base64,${figtree}) format("woff2");}
 `;
 
 const BAR = { bad: "#d93a2b", mid: "#2a78d6", good: "#0f8f63" };
-const rowsHtml = oracles.oracles
+const rowsHtml = scored
   .map(
     (o) => `
     <div class="row">
@@ -84,24 +89,22 @@ ${FACES}
 /* Everything below is sized to fit 2000x1500 EXACTLY once — an earlier
    version overflowed and cut off the octopus, i.e. the subject of the
    headline. The script asserts the fit at the end rather than trusting it. */
-body{position:relative;width:2000px;height:1500px;background:#faf5ea;color:#211d2b;overflow:hidden;
-  font:400 30px/1.42 "EB Garamond",Georgia,serif;padding:64px 90px 0;}
-h1{font-family:"Cinzel",Georgia,serif;font-size:76px;line-height:1.03;font-weight:800;margin-bottom:18px;max-width:1660px;}
-.sub{font-size:32px;line-height:1.35;color:#4b445c;max-width:1600px;margin-bottom:36px;}
+body{position:relative;width:2000px;height:1500px;background:#f7f4ee;color:#16181f;overflow:hidden;
+  font:400 30px/1.42 "Figtree",system-ui,sans-serif;padding:64px 90px 0;}
+h1{font-family:"Fraunces",Georgia,serif;font-size:76px;line-height:1.03;font-weight:800;margin-bottom:18px;max-width:1660px;}
+.sub{font-size:32px;line-height:1.35;color:#454a57;max-width:1600px;margin-bottom:36px;}
 .row{margin-bottom:26px;}
-.name{font-family:"Cinzel",Georgia,serif;font-size:40px;font-weight:700;margin-bottom:7px;}
-.track{position:relative;height:52px;background:#e4dccb;border-radius:5px;}
+.name{font-family:"Fraunces",Georgia,serif;font-size:40px;font-weight:700;margin-bottom:7px;}
+.track{position:relative;height:52px;background:#e0dad0;border-radius:5px;}
 .bar{height:52px;border-radius:5px;}
 .val{position:absolute;top:2px;left:0;width:100%;height:100%;}
-.measures{font-size:24px;color:#736c85;margin-top:8px;max-width:1800px;white-space:nowrap;overflow:hidden;}
+.measures{font-size:24px;color:#767c8b;margin-top:8px;max-width:1800px;white-space:nowrap;overflow:hidden;}
 .warn{margin-top:2px;font-size:32px;font-style:italic;color:#a8291f;}
 .src{position:absolute;bottom:44px;left:90px;right:90px;display:flex;justify-content:space-between;gap:40px;
-  font-size:24px;color:#736c85;border-top:2px solid #c1b7a4;padding-top:16px;}
+  font-size:24px;color:#767c8b;border-top:2px solid #cfc7ba;padding-top:16px;}
 </style></head><body>
 <h1>An octopus outforecast every economist on this chart</h1>
-<p class="sub">Five forecasters, five published records with real denominators — and five completely
-different tests. Which is the point: put incomparable things on one axis and the ranking looks
-like a finding.</p>
+<p class="sub">Five published records with real denominators — and five completely different tests, which is the point. The other three players on the roster have no published record at all. Those are the ones you hear from.</p>
 ${rowsHtml}
 <p class="warn">↑ Do not trust this chart. Trust the denominators.</p>
 <div class="src">
@@ -128,7 +131,7 @@ await page.evaluate(() => {
     val.style.width = "auto";
     val.style.fontWeight = "700";
     val.style.fontSize = "36px";
-    val.style.fontFamily = '"Cinzel", Georgia, serif';
+    val.style.fontFamily = '"Fraunces", Georgia, serif';
   });
 });
 
@@ -162,18 +165,18 @@ const bottom = ranked[ranked.length - 1];
 const og = `<!doctype html><html><head><meta charset="utf-8"><style>
 ${FACES}
 *{box-sizing:border-box;margin:0;}
-body{position:relative;width:1200px;height:630px;background:#faf5ea;color:#211d2b;overflow:hidden;
-  font:400 22px/1.4 "EB Garamond",Georgia,serif;padding:54px 64px 0;}
-h1{font-family:"Cinzel",Georgia,serif;font-size:46px;line-height:1.05;font-weight:800;margin-bottom:14px;max-width:1030px;}
-.sub{font-size:22px;line-height:1.35;color:#4b445c;max-width:980px;margin-bottom:34px;}
+body{position:relative;width:1200px;height:630px;background:#f7f4ee;color:#16181f;overflow:hidden;
+  font:400 22px/1.4 "Figtree",system-ui,sans-serif;padding:54px 64px 0;}
+h1{font-family:"Fraunces",Georgia,serif;font-size:46px;line-height:1.05;font-weight:800;margin-bottom:14px;max-width:1030px;}
+.sub{font-size:22px;line-height:1.35;color:#454a57;max-width:980px;margin-bottom:34px;}
 .row{margin-bottom:26px;}
-.name{font-family:"Cinzel",Georgia,serif;font-size:27px;font-weight:700;margin-bottom:6px;}
-.track{position:relative;height:36px;background:#e4dccb;border-radius:4px;}
+.name{font-family:"Fraunces",Georgia,serif;font-size:27px;font-weight:700;margin-bottom:6px;}
+.track{position:relative;height:36px;background:#e0dad0;border-radius:4px;}
 .bar{height:36px;border-radius:4px;}
-.val{position:absolute;top:1px;font-family:"Cinzel",Georgia,serif;font-size:24px;font-weight:700;}
-.measures{font-size:17px;color:#736c85;margin-top:7px;white-space:nowrap;overflow:hidden;}
+.val{position:absolute;top:1px;font-family:"Fraunces",Georgia,serif;font-size:24px;font-weight:700;}
+.measures{font-size:17px;color:#767c8b;margin-top:7px;white-space:nowrap;overflow:hidden;}
 .src{position:absolute;bottom:30px;left:64px;right:64px;display:flex;justify-content:space-between;gap:30px;
-  font-size:17px;color:#736c85;border-top:2px solid #c1b7a4;padding-top:12px;}
+  font-size:17px;color:#767c8b;border-top:2px solid #cfc7ba;padding-top:12px;}
 </style></head><body>
 <h1>An octopus outforecast every economist on this chart</h1>
 <p class="sub">Five oracles, five published records — and five completely different tests.</p>

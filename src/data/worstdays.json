@@ -1,0 +1,46 @@
+{
+  "note": "The ten worst single days in the Dow Jones Industrial Average, measured close to close. IMPORTANT: these are drawn as candle BODIES ONLY. A real candle's body runs open to close and its wicks show the intraday high and low; reliable intraday ranges for 1899–1932 are not something we have, so the figure shows the close-to-close move and its caption says so. `pct` is the day's percentage change; `nextLabel` describes what the index did afterwards and is only filled in where we can state it plainly.",
+  "source": "Standard record of the DJIA's largest one-day percentage declines. What came next: 1987 — the Dow closed the year at 1938.83 against 1895.95 at the end of 1986, i.e. UP on the year, and regained its August 1987 peak in August 1989. 2020 — the low came a week later on 23 March 2020 at 18,591.93, and the Dow closed above 30,000 for the first time on 24 November 2020, a new record. 1929 — the slide continued to 41.22 on 8 July 1932, 89 percent below the September 1929 peak, and the old peak was not regained until 23 November 1954.",
+  "index": "Dow Jones Industrial Average, close-to-close",
+  "days": [
+    { "rank": 1, "date": "19 Oct 1987", "year": 1987, "pct": -22.61, "name": "Black Monday", "era": "1987" },
+    { "rank": 2, "date": "16 Mar 2020", "year": 2020, "pct": -12.93, "name": "Lockdown Monday", "era": "2020" },
+    { "rank": 3, "date": "28 Oct 1929", "year": 1929, "pct": -12.82, "name": "Black Monday", "era": "1929" },
+    { "rank": 4, "date": "29 Oct 1929", "year": 1929, "pct": -11.73, "name": "Black Tuesday", "era": "1929" },
+    { "rank": 5, "date": "12 Mar 2020", "year": 2020, "pct": -9.99, "name": "", "era": "2020" },
+    { "rank": 6, "date": "6 Nov 1929", "year": 1929, "pct": -9.92, "name": "", "era": "1929" },
+    { "rank": 7, "date": "18 Dec 1899", "year": 1899, "pct": -8.72, "name": "", "era": "other" },
+    { "rank": 8, "date": "12 Aug 1932", "year": 1932, "pct": -8.4, "name": "", "era": "1929" },
+    { "rank": 9, "date": "14 Mar 1907", "year": 1907, "pct": -8.29, "name": "", "era": "other" },
+    { "rank": 10, "date": "26 Oct 1987", "year": 1987, "pct": -8.04, "name": "", "era": "1987" }
+  ],
+  "afters": [
+    {
+      "era": "1987",
+      "day": "19 Oct 1987",
+      "pct": -22.61,
+      "headline": "The worst day ever recorded.",
+      "next": "The Dow finished that same year UP on the year. It was back at its August peak within two years.",
+      "verdict": "A record-breaking crash, and by New Year it had mostly stopped mattering.",
+      "tone": "good"
+    },
+    {
+      "era": "2020",
+      "day": "16 Mar 2020",
+      "pct": -12.93,
+      "headline": "The second worst.",
+      "next": "The bottom came a week later. Eight months after that the Dow closed above 30,000 for the first time in its history.",
+      "verdict": "A world-stopping pandemic, and the chart had healed by November.",
+      "tone": "good"
+    },
+    {
+      "era": "1929",
+      "day": "28–29 Oct 1929",
+      "pct": -12.82,
+      "headline": "Third and fourth.",
+      "next": "It kept falling. For nearly three more years, to 89 percent below the peak. The old high was not seen again until 1954.",
+      "verdict": "Almost exactly the same size of day. Twenty-five years to get back.",
+      "tone": "bad"
+    }
+  ]
+}
