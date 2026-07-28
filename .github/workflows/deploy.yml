@@ -2,10 +2,13 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    # The feature branch deploys too, so the piece can be previewed on a real
-    # phone before anything is merged. Pages serves whichever deployment ran
-    # last, so remove the branch here once this is merged to main.
-    branches: [main, claude/stock-crashes-scrollytelling-mxyuqv]
+    # main only. Enabling Pages creates a `github-pages` environment whose
+    # deployment-branch policy allows the default branch and nothing else, so
+    # listing a feature branch here does not work: the deploy job is rejected
+    # before a runner is even assigned (it fails in ~2s with no steps). To
+    # preview a branch without merging, widen that policy in
+    # Settings → Environments → github-pages first.
+    branches: [main]
   workflow_dispatch:
 
 permissions:

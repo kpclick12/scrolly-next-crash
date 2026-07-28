@@ -54,9 +54,13 @@ not know about:
   falls to ΔE 4.1, so identity in every figure comes from always-on direct
   labels, never from hue. See the comment block in `app.css`; re-run the
   `dataviz` validator with `--pairs all` in BOTH modes if the palette changes.
-- **`deploy.yml` currently deploys this feature branch as well as main**, so
-  the piece can be previewed on a real phone before merging. Remove the branch
-  from the trigger list once it merges.
+- **Pages deploys from `main` only, and that is not just a preference.**
+  Enabling Pages creates a `github-pages` environment whose deployment-branch
+  policy allows the default branch and nothing else, so adding a feature branch
+  to `deploy.yml` does not work — the deploy job is rejected before a runner is
+  assigned and fails in about two seconds with no steps at all. To preview a
+  branch without merging, widen that policy in
+  Settings → Environments → github-pages first.
 - Sourcing is non-negotiable: every figure traces to a line in the
   "Methodology & sources" section, and anything illustrative says so where it
   appears, not only down there.
