@@ -1,0 +1,78 @@
+{
+  "note": "Nine books on the same shelf, in publication order. Titles, authors and years only — no sales figures, no rankings, nothing that would need a source beyond the books themselves. `line` is a one-sentence gloss and is our characterisation, not a quotation.",
+  "source": "Publication details as printed on each first edition.",
+  "shelf": [
+    {
+      "title": "Extraordinary Popular Delusions and the Madness of Crowds",
+      "short": "Popular Delusions",
+      "author": "Charles Mackay",
+      "year": 1841,
+      "spine": "brown",
+      "line": "Tulips, the South Sea, the railway boom. People go mad in herds and recover one at a time."
+    },
+    {
+      "title": "A Random Walk Down Wall Street",
+      "short": "A Random Walk",
+      "author": "Burton Malkiel",
+      "year": 1973,
+      "spine": "blue",
+      "line": "A blindfolded monkey throwing darts would do about as well as the experts."
+    },
+    {
+      "title": "Manias, Panics and Crashes",
+      "short": "Manias, Panics",
+      "author": "Charles Kindleberger",
+      "year": 1978,
+      "spine": "red",
+      "line": "Every bubble runs the same script. Knowing the script does not tell you the date."
+    },
+    {
+      "title": "Irrational Exuberance",
+      "short": "Irrational Exuberance",
+      "author": "Robert Shiller",
+      "year": 2000,
+      "spine": "green",
+      "line": "Published the same month the dot-com market peaked. The one that landed."
+    },
+    {
+      "title": "Fooled by Randomness",
+      "short": "Fooled by Randomness",
+      "author": "Nassim Nicholas Taleb",
+      "year": 2001,
+      "spine": "slate",
+      "line": "You cannot tell skill from luck by looking at the winners."
+    },
+    {
+      "title": "The Black Swan",
+      "short": "The Black Swan",
+      "author": "Nassim Nicholas Taleb",
+      "year": 2007,
+      "spine": "ink",
+      "line": "The events that matter most are the ones nobody had on the list."
+    },
+    {
+      "title": "Thinking, Fast and Slow",
+      "short": "Thinking, Fast and Slow",
+      "author": "Daniel Kahneman",
+      "year": 2011,
+      "spine": "sand",
+      "line": "The mind is built to see a story where there is only noise."
+    },
+    {
+      "title": "The Signal and the Noise",
+      "short": "The Signal and the Noise",
+      "author": "Nate Silver",
+      "year": 2012,
+      "spine": "blue",
+      "line": "The book that made forecasting famous. Its actual argument is mostly humility."
+    },
+    {
+      "title": "Superforecasting",
+      "short": "Superforecasting",
+      "author": "Tetlock & Gardner",
+      "year": 2015,
+      "spine": "green",
+      "line": "Some people really are better at this. They give odds, and they change them."
+    }
+  ]
+}

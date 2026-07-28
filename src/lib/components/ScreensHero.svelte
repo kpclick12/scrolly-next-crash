@@ -278,65 +278,138 @@
     scene.add(crt);
 
     // ===== 2008 · THE PHONE, whose screen the reader scrolls ===============
+    // Built to look like the phone it actually was: glossy black back, a
+    // chrome band around the edge, a big bezel, an earpiece slot and a round
+    // home button. A featureless dark slab read as "a rectangle", which is
+    // not what anybody remembers.
     const phone = new THREE.Group();
-    const body = new THREE.Mesh(
-      new THREE.BoxGeometry(1.5, 3.0, 0.12),
-      new THREE.MeshStandardMaterial({ color: "#1b1e26", metalness: 0.6, roughness: 0.38 })
+    const PBW = 1.62, PBH = 3.24, PBD = 0.2;
+
+    const glossBlack = new THREE.MeshStandardMaterial({
+      color: "#232630", metalness: 0.5, roughness: 0.26,
+    });
+    const chrome = new THREE.MeshStandardMaterial({
+      color: "#e4e8ee", metalness: 0.9, roughness: 0.12,
+    });
+
+    // The chrome band is a slightly larger, slightly thinner box behind the
+    // black face, so it shows as a rim all the way round.
+    const rim = new THREE.Mesh(
+      new THREE.BoxGeometry(PBW + 0.075, PBH + 0.075, PBD * 0.86),
+      chrome
     );
-    // A tall strip: the visible screen is a WINDOW onto it, and scrolling is a
-    // texture offset. This is the cheapest possible way to make the reader's
-    // scroll be the phone's scroll, and it is also the most literal.
-    const stripH = 2400, stripW = 600;
+    // The black front face and the glossy back.
+    const face = new THREE.Mesh(new THREE.BoxGeometry(PBW, PBH, PBD), glossBlack);
+
+    // Earpiece slot and home button — the two details that date it instantly.
+    const earpiece = new THREE.Mesh(
+      new THREE.BoxGeometry(0.34, 0.05, 0.02),
+      new THREE.MeshStandardMaterial({ color: "#2a2a2e", metalness: 0.3, roughness: 0.7 })
+    );
+    earpiece.position.set(0, PBH / 2 - 0.2, PBD / 2 + 0.005);
+    const home = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.15, 0.15, 0.03, 28),
+      new THREE.MeshStandardMaterial({ color: "#111114", metalness: 0.2, roughness: 0.35 })
+    );
+    home.rotation.x = Math.PI / 2;
+    home.position.set(0, -PBH / 2 + 0.26, PBD / 2 + 0.012);
+    const homeSquare = new THREE.Mesh(
+      new THREE.RingGeometry(0.055, 0.068, 4),
+      new THREE.MeshBasicMaterial({ color: "#4a4a52" })
+    );
+    homeSquare.rotation.z = Math.PI / 4;
+    homeSquare.position.set(0, -PBH / 2 + 0.26, PBD / 2 + 0.03);
+
+    // The screen: a window onto a tall strip, so scrolling is a texture
+    // offset. That is the cheapest way to make the reader's scroll BE the
+    // phone's scroll, and also the most literal.
+    const SCR_W = 1.34, SCR_H = 2.24;
+    const stripW = 640, stripH = 2600;
+    const ROW_H = 74;
     const feedTex = tex(stripW, stripH, (g) => {
       g.fillStyle = "#0b0d12";
       g.fillRect(0, 0, stripW, stripH);
+
       // A long falling line down the whole strip.
       g.strokeStyle = "#ff5c46";
-      g.lineWidth = 7;
+      g.lineWidth = 8;
       g.lineJoin = "round";
       g.beginPath();
-      for (let i = 0; i < 260; i++) {
-        const t = i / 259;
-        const v = t < 0.22 ? 0.86 + t * 0.2 : 0.9 - (t - 0.22) * 0.95;
-        const px = 46 + Math.sin(i * 0.7) * 12 + (i % 2) * 6;
-        const py = 120 + t * (stripH - 260);
-        const x = 60 + (1 - v) * (stripW - 150) + px * 0.15;
-        i ? g.lineTo(x, py) : g.moveTo(x, py);
+      for (let i = 0; i < 300; i++) {
+        const t2 = i / 299;
+        const v = t2 < 0.2 ? 0.86 + t2 * 0.22 : 0.9 - (t2 - 0.2) * 0.95;
+        const x = 46 + (1 - v) * 200 + Math.sin(i * 0.7) * 9;
+        const y = 120 + t2 * (stripH - 240);
+        i ? g.lineTo(x, y) : g.moveTo(x, y);
       }
       g.stroke();
-      // Rows of a falling ticker beside it. DELIBERATELY NUMBERLESS: an
-      // earlier version printed percentages here, and they were invented —
-      // scene dressing is still a figure if it has numbers on it. The rows
-      // carry a name and a red bar, which claims nothing.
+
+      // Ticker rows. DELIBERATELY NUMBERLESS: an earlier version printed
+      // percentages here and they were invented — scene dressing is still a
+      // figure if it has numbers on it. A name and a red bar claim nothing.
       g.textAlign = "left";
-      for (let r = 0; r < 40; r++) {
-        const y = 150 + r * 56;
-        g.fillStyle = "#20242e";
-        g.fillRect(300, y - 26, 260, 44);
-        g.fillStyle = "#8d93a3";
-        g.font = "600 22px system-ui, sans-serif";
-        g.fillText(["DJIA", "S&P", "FTSE", "DAX", "NIKKEI"][r % 5], 316, y + 4);
+      for (let r = 0; r < 34; r++) {
+        const y = 170 + r * ROW_H;
+        g.fillStyle = "#191c24";
+        g.fillRect(300, y - 28, 320, 56);
+        g.fillStyle = "#9aa0b0";
+        g.font = "600 23px system-ui, sans-serif";
+        g.fillText(["DJIA", "S&P 500", "FTSE", "DAX", "NIKKEI"][r % 5], 318, y + 6);
         g.fillStyle = "#ff5c46";
-        const bar = 30 + ((r * 37) % 60);
-        g.fillRect(546 - bar, y - 7, bar, 12);
-        // A small down-caret, so the direction reads without a number.
+        const bar = 34 + ((r * 37) % 66);
+        g.fillRect(604 - bar, y - 6, bar, 13);
         g.beginPath();
-        g.moveTo(536, y - 14);
-        g.lineTo(546, y - 14);
-        g.lineTo(541, y - 22);
+        g.moveTo(592, y - 14);
+        g.lineTo(604, y - 14);
+        g.lineTo(598, y - 24);
         g.closePath();
         g.fill();
       }
     });
     feedTex.wrapS = feedTex.wrapT = THREE.RepeatWrapping;
-    // Show one screenful of the strip at a time.
-    feedTex.repeat.set(1, 0.28);
+    feedTex.repeat.set(1, SCR_H / SCR_W / (stripH / stripW));
     const glass = new THREE.Mesh(
-      new THREE.PlaneGeometry(1.34, 2.72),
+      new THREE.PlaneGeometry(SCR_W, SCR_H),
       new THREE.MeshBasicMaterial({ map: feedTex })
     );
-    glass.position.z = 0.065;
-    phone.add(body, glass);
+    glass.position.set(0, 0.11, PBD / 2 + 0.006);
+
+    // The status bar is its OWN quad pinned to the top of the screen rather
+    // than part of the scrolling strip. An earlier version repeated it down
+    // the texture so that one was always in view, and they collided with the
+    // ticker rows — which is also just wrong: a status bar does not scroll.
+    const statusTex = tex(640, 46, (g) => {
+      g.fillStyle = "#000000";
+      g.fillRect(0, 0, 640, 46);
+      g.fillStyle = "#e8eaef";
+      g.font = "600 22px system-ui, sans-serif";
+      g.textAlign = "left";
+      // Signal dots, then the carrier.
+      for (let i = 0; i < 5; i++) {
+        g.globalAlpha = i < 3 ? 1 : 0.32;
+        g.beginPath();
+        g.arc(20 + i * 15, 24, 5, 0, Math.PI * 2);
+        g.fill();
+      }
+      g.globalAlpha = 1;
+      g.fillText("3G", 104, 32);
+      g.textAlign = "center";
+      g.fillText("9:42 AM", 320, 32);
+      g.textAlign = "right";
+      g.fillText("100%", 596, 32);
+      g.strokeStyle = "#e8eaef";
+      g.lineWidth = 2;
+      g.strokeRect(604, 15, 24, 17);
+      g.fillRect(606, 17, 20, 13);
+    });
+    const statusH = (SCR_W / 640) * 46;
+    const status = new THREE.Mesh(
+      new THREE.PlaneGeometry(SCR_W, statusH),
+      new THREE.MeshBasicMaterial({ map: statusTex })
+    );
+    status.position.set(0, 0.11 + SCR_H / 2 - statusH / 2, PBD / 2 + 0.008);
+
+    phone.add(rim, face, glass, status, earpiece, home, homeSquare);
     phone.position.set(0, 0, -1.4);
     phone.visible = false;
     scene.add(phone);

@@ -55,6 +55,7 @@
   <div class="grid" role="radiogroup" aria-label="Choose a forecaster">
     {#each cast as c, i (c.id)}
       {@const f = FACE[c.id]}
+      <div class="slot">
       <button
         id="ps-{i}"
         class="tile tone-{c.tone}"
@@ -123,8 +124,10 @@
             {/if}
           </svg>
         </span>
-        <span class="plate">{c.name}</span>
+        {#if selected === i}<span class="p1" aria-hidden="true">1P</span>{/if}
       </button>
+      <span class="plate" class:on={selected === i}>{c.name}</span>
+    </div>
     {/each}
   </div>
 
@@ -171,183 +174,195 @@
 </div>
 
 <style>
+  /* Styled after the Mario Kart 64 character screen: a green marbled panel, a
+     fat yellow title with a hard dark outline, portrait tiles in steel-blue
+     frames, the name on a plate UNDER each tile, and a 1P tag on the one you
+     have chosen. */
   .cabinet {
-    background: var(--screen);
-    border-radius: 18px;
-    padding: 26px 22px 24px;
-    box-shadow: 0 20px 60px rgba(10, 12, 18, 0.28);
-    max-width: 1000px;
+    background:
+      radial-gradient(120% 90% at 25% 15%, rgba(255, 255, 255, 0.11), transparent 60%),
+      radial-gradient(90% 80% at 80% 80%, rgba(0, 0, 0, 0.3), transparent 60%),
+      linear-gradient(160deg, #3f6b3b 0%, #2c4f2c 45%, #24422a 100%);
+    border: 4px solid #1a2f1c;
+    border-radius: 14px;
+    padding: 22px 18px 22px;
+    box-shadow: 0 20px 60px rgba(10, 12, 18, 0.4), inset 0 0 60px rgba(0, 0, 0, 0.28);
+    max-width: 940px;
     margin: 0 auto;
   }
   .marquee {
     font-family: var(--display);
-    font-size: clamp(24px, 4.4vw, 40px);
+    font-size: clamp(28px, 5.6vw, 54px);
     font-weight: 900;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     text-align: center;
-    color: var(--signal);
+    color: #ffd83d;
     margin: 0 0 20px;
     text-transform: uppercase;
-    text-shadow: 0 3px 0 rgba(0, 0, 0, 0.28);
+    /* The hard outline is what makes it read as a console title. */
+    -webkit-text-stroke: 3px #17240f;
+    paint-order: stroke fill;
+    text-shadow: 0 5px 0 rgba(0, 0, 0, 0.45);
   }
   .grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
+    gap: 14px 12px;
   }
+  .slot { min-width: 0; display: flex; flex-direction: column; align-items: stretch; }
   .tile {
+    position: relative;
     appearance: none;
-    background: rgba(255, 255, 255, 0.06);
-    border: 2px solid rgba(255, 255, 255, 0.16);
-    border-radius: 12px;
-    padding: 10px 6px 8px;
+    background: linear-gradient(180deg, #9fc3e4 0%, #6f9bc4 55%, #52789e 100%);
+    border: 3px solid #24405c;
+    border-radius: 10px;
+    padding: 8px 4px;
     cursor: pointer;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
     min-width: 0;
-    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5);
+    transition: transform 0.12s ease, filter 0.12s ease, border-color 0.12s ease;
   }
-  .tile:hover { transform: translateY(-3px); }
+  .tile:hover { transform: translateY(-2px); }
   .tile.on {
-    border-color: var(--signal);
-    background: rgba(255, 255, 255, 0.13);
-    transform: translateY(-4px);
+    border-color: #ffd83d;
+    filter: saturate(1.15) brightness(1.08);
+    transform: translateY(-3px);
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.6), 0 0 0 3px #e0332a;
   }
-  /* The dark cabinet needs its own focus ring — the page's dark-ink one is
-     invisible here. */
-  .tile:focus-visible {
-    outline: 3px solid var(--signal);
-    outline-offset: 3px;
-  }
-  .portrait {
-    display: block;
-    width: min(100%, 78px);
-    aspect-ratio: 1;
-  }
-  .portrait svg { width: 100%; height: 100%; display: block; }
-  .halo { fill: rgba(255, 255, 255, 0.1); }
-  .tile.on .halo { fill: rgba(255, 255, 255, 0.2); }
-  .plate {
+  .tile:focus-visible { outline: 3px solid #ffd83d; outline-offset: 3px; }
+  .p1 {
+    position: absolute;
+    left: -6px;
+    top: -8px;
+    background: #e0332a;
+    color: #fff;
     font-family: var(--sans);
-    font-size: 11.5px;
-    font-weight: 800;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.72);
-    text-align: center;
-    line-height: 1.2;
-    /* NOT overflow-wrap: anywhere — it broke names mid-word into
-       "THE ECONOMIS / T". Let them wrap on spaces and give the tile enough
-       width instead. */
-    hyphens: none;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
   }
-  .tile.on .plate { color: #ffffff; }
+  .portrait { display: block; width: min(100%, 84px); aspect-ratio: 1; }
+  .portrait svg { width: 100%; height: 100%; display: block; }
+  .halo { fill: rgba(255, 255, 255, 0.22); }
+  .tile.on .halo { fill: rgba(255, 255, 255, 0.4); }
+  /* The name plate sits under the tile on its own strip, as on the console. */
+  .plate {
+    margin-top: 5px;
+    background: #f2efe4;
+    border: 2px solid #24405c;
+    border-radius: 5px;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #1d2a3a;
+    text-align: center;
+    line-height: 1.15;
+    padding: 3px 2px;
+    hyphens: none;
+    min-height: 2.4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .plate.on { background: #ffd83d; border-color: #17240f; }
 
   .card {
     margin-top: 18px;
-    background: rgba(0, 0, 0, 0.24);
-    border-radius: 12px;
-    padding: 20px 20px 18px;
+    background: rgba(9, 16, 11, 0.62);
+    border: 2px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    padding: 18px 18px 16px;
   }
   .card-head h3 {
     font-family: var(--display);
-    font-size: clamp(22px, 3.4vw, 30px);
+    font-size: clamp(21px, 3.4vw, 29px);
     font-weight: 800;
     color: #ffffff;
     margin: 0;
   }
   .tag {
     font-family: var(--sans);
-    font-size: 14px;
-    color: var(--signal);
-    margin: 2px 0 16px;
-    font-weight: 600;
+    font-size: 13.5px;
+    color: #ffd83d;
+    margin: 2px 0 14px;
+    font-weight: 700;
   }
-  .stats {
-    display: grid;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
+  .stats { display: grid; gap: 9px; margin-bottom: 14px; }
   .stat {
     display: grid;
-    grid-template-columns: 168px auto 1fr;
+    grid-template-columns: 156px auto 1fr;
     align-items: center;
     gap: 12px;
   }
   .label {
     font-family: var(--sans);
-    font-size: 12.5px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.62);
+    color: rgba(255, 255, 255, 0.6);
   }
-  .bars { display: flex; gap: 4px; }
+  .bars { display: flex; gap: 3px; }
   .bars i {
-    width: 22px;
-    height: 13px;
+    width: 20px;
+    height: 12px;
     border-radius: 2px;
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(0, 0, 0, 0.25);
   }
-  .bars i.fill { background: var(--signal); }
+  .bars i.fill { background: #ffd83d; }
   .val {
     font-family: var(--sans);
-    font-size: 13.5px;
+    font-size: 13px;
     color: rgba(255, 255, 255, 0.9);
     font-variant-numeric: tabular-nums;
   }
-  .val.soft { color: rgba(255, 255, 255, 0.5); }
+  .val.soft { color: rgba(255, 255, 255, 0.48); }
   .unpub {
     grid-column: 2 / -1;
     font-family: var(--sans);
-    font-size: 14px;
-    font-weight: 700;
-    font-style: italic;
-    color: #ffb4a2;
-  }
-  .measures,
-  .line,
-  .disclaimer {
-    font-family: var(--sans);
-    margin: 0 0 10px;
-  }
-  .measures {
     font-size: 13.5px;
-    color: rgba(255, 255, 255, 0.6);
+    font-weight: 800;
+    font-style: italic;
+    color: #ff9d8a;
   }
-  .measures strong { color: rgba(255, 255, 255, 0.82); }
-  .line {
-    font-size: 16.5px;
-    line-height: 1.55;
-    color: rgba(255, 255, 255, 0.94);
-  }
+  .measures, .line, .disclaimer { font-family: var(--sans); margin: 0 0 9px; }
+  .measures { font-size: 13px; color: rgba(255, 255, 255, 0.58); }
+  .measures strong { color: rgba(255, 255, 255, 0.8); }
+  .line { font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, 0.94); }
   .disclaimer {
-    font-size: 12.5px;
-    line-height: 1.5;
-    color: rgba(255, 255, 255, 0.44);
+    font-size: 12px;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.42);
     margin-bottom: 0;
   }
 
   @media (max-width: 620px) {
-    /* Two columns on a phone. Four tiles across leaves each one about 74px
-       wide, which is not enough for "The Superforecaster" on one line. */
+    /* Two columns on a phone. Four across leaves each tile about 74px wide,
+       which is not enough for "The Superforecaster" on a plate. */
     .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .portrait { width: min(100%, 62px); }
+    .portrait { width: min(100%, 66px); }
   }
   @media (max-width: 700px) {
-    .cabinet { padding: 20px 12px 18px; border-radius: 12px; }
-    .grid { gap: 8px; }
-    .tile { padding: 8px 4px 6px; border-radius: 9px; }
-    .plate { font-size: 11px; letter-spacing: 0; }
+    .cabinet { padding: 16px 10px; border-radius: 10px; }
+    .grid { gap: 12px 8px; }
+    .plate { font-size: 10.5px; }
     .stat {
       grid-template-columns: 1fr;
       gap: 4px;
       padding-bottom: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
     .unpub { grid-column: 1; }
-    .line { font-size: 15.5px; }
+    .line { font-size: 15px; }
   }
 </style>

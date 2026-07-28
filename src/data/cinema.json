@@ -1,0 +1,24 @@
+{
+  "note": "The clip is embedded through youtube-nocookie.com and is NOT loaded until the reader clicks the poster — the poster is our own drawing, so nothing is requested from YouTube until somebody asks for it. `videoId` is the Short supplied by the author; it COULD NOT BE VERIFIED FROM THE BUILD ENVIRONMENT (YouTube is unreachable from it), so `title` is deliberately generic rather than naming a scene we have not watched — set it here once confirmed. `shorts: true` renders a 9:16 frame. Everything about Burry below is drawn from widely reported, dated public record, and the section is deliberately fair to him: he made one of the great calls, and he has said himself that a later one was wrong.",
+  "source": "The Big Short, dir. Adam McKay, Paramount Pictures, 2015, based on Michael Lewis's book (2010). Burry ran Scion Capital and began buying credit default swaps against subprime mortgage bonds in 2005; investors tried to withdraw and he restricted redemptions before the position paid off in 2007–08. In January 2023 he posted a one-word tweet, \"Sell.\" The S&P 500 rose sharply over that year, and in October 2023 he posted \"I was wrong to say sell.\" Asch's conformity result: Solomon Asch (1951, 1956) — about three quarters of participants went along with an obviously wrong majority at least once.",
+  "video": {
+    "videoId": "RBfz27mtwgg",
+    "shorts": true,
+    "title": "The Big Short (2015)",
+    "credit": "Dir. Adam McKay · Paramount Pictures",
+    "why": "He started betting against the housing market in 2005, two years before anybody agreed with him."
+  },
+  "burry": {
+    "name": "Michael Burry",
+    "call": 2005,
+    "callLine": "Started betting against subprime mortgage bonds in 2005, two years before anyone agreed with him.",
+    "costLine": "His investors tried to pull their money out. He had to lock the fund to stop them.",
+    "sinceLine": "In January 2023 he tweeted one word: \"Sell.\" The market went up for the rest of the year. That October he tweeted: \"I was wrong to say sell.\"",
+    "verdict": "The most famous correct call of the century, and a public wrong one from the same person. Both are the same skill."
+  },
+  "asch": {
+    "conformed": 75,
+    "year": 1951,
+    "line": "Asked which of three lines was longest — an obvious question — about three quarters of people agreed with an obviously wrong majority at least once."
+  }
+}

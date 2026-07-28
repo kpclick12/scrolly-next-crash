@@ -22,16 +22,23 @@ The frame is **screens**: every crash arrives on the newest screen in the
 house, and the last screen is a character-select. Four beats, deliberately
 short — an earlier version had five acts and was too long.
 
-1. **Hero (Three.js).** The reader OPERATES each screen rather than flying
-   past it: the 1929 newspaper unfolds as you scroll, the 1987 CRT powers on
-   with a scanline sweep and draws its chart live, and the 2008 phone's screen
-   scrolls under your thumb (a texture offset, so the reader's scroll *is* the
-   phone's scroll).
+Each beat is a different MEDIUM, and that is the spine:
+
+1. **Hero (Three.js)** — newspaper, computer, phone. The reader OPERATES each
+   one rather than flying past it: the 1929 paper unfolds as you scroll, the
+   1987 CRT powers on with a scanline sweep and draws its chart live, and the
+   2008 iPhone's screen scrolls under your thumb (a texture offset, so the
+   reader's scroll *is* the phone's scroll).
 2. **The worst days** — the ten biggest one-day falls as candles, and the
    finding that they are not tied to the famous crashes the way people assume.
-3. **The prediction boom** — how forecasting got famous, against 5 of 153.
-4. **PLAYER SELECT** — eight forecasters, Mario Kart stat cards, tap to see a
-   record. No scroll mechanic at all in this one.
+3. **The bookshelf** — 174 years of books saying the same thing, pickable.
+   This replaced three paragraphs of prose; keep it that way.
+4. **The cinema** — a click-to-load clip from *The Big Short*, Michael Burry's
+   great call and his later wrong one, and the herd. The video is a FACADE:
+   the poster is our own drawing and nothing is requested from YouTube until
+   the reader presses play, and then only via youtube-nocookie.com.
+5. **PLAYER SELECT** — eight forecasters, Mario Kart 64 stat cards, tap to see
+   a record. No scroll mechanic at all in this one.
 
 ## Rules for this repo
 

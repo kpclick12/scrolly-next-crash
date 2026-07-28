@@ -2,27 +2,28 @@
   import { appData as data } from "./lib/data/load.js";
   import ScreensHero from "./lib/components/ScreensHero.svelte";
   import DaysSection from "./lib/components/DaysSection.svelte";
-  import BoomSection from "./lib/components/BoomSection.svelte";
+  import BooksSection from "./lib/components/BooksSection.svelte";
+  import CinemaSection from "./lib/components/CinemaSection.svelte";
   import PlayerSelect from "./lib/components/PlayerSelect.svelte";
 </script>
 
 <ScreensHero />
 
 <main>
-  <!-- Three sections, three different shapes on purpose: a wide sticky chart
-       with the copy running under it, a quiet text-forward run, and a
-       full-bleed screen you actually poke. -->
+  <!-- Four sections, four different shapes on purpose, and each one is a
+       different medium: a wide sticky chart with the copy running under it,
+       a shelf you pick books off, a cinema, and a screen you play. -->
   <DaysSection data={data.worstdays} />
-  <BoomSection data={data.forecasts} />
+  <BooksSection data={data.books} forecasts={data.forecasts} />
+  <CinemaSection data={data.cinema} />
 
   <section class="select section section-dark" aria-label="Player select">
     <div class="wrap">
       <div class="column select-intro">
-        <p class="eyebrow">Three · choose your forecaster</p>
+        <p class="eyebrow">Four · choose your forecaster</p>
         <h2 class="big">So who do you actually listen to?</h2>
         <p class="standfirst">
-          Eight of them. Pick one and see what they have actually got — and
-          notice how many of the loudest have no score at all.
+          Eight of them. Pick one.
         </p>
       </div>
     </div>
@@ -34,14 +35,11 @@
         <p>
           The one worth copying is the boring one. The superforecaster never
           says a crash is coming — they say fifteen percent, then twelve, then
-          twenty, and tell you what moved. They are the only player here who
-          has been scored properly and came out well, and they are almost
-          impossible to book on television.
+          twenty, and tell you what moved.
         </p>
         <p>
-          The pundit and the algorithm have no published record at all. That is
-          not an oversight in our data. Nobody is keeping score on them, and
-          not being scored is the most comfortable position in forecasting.
+          Three of the eight have no published record at all. Nobody keeps
+          score on them, and that is the most comfortable job in forecasting.
         </p>
       </div>
     </div>
@@ -129,6 +127,29 @@
           intelligence analysts with access to classified reporting. Octopus
           Paul went 4 of 6 at Euro 2008 and 8 of 8 at the 2010 World Cup, and
           died on 26 October 2010.
+        </li>
+        <li>
+          <strong>The bookshelf</strong> — titles, authors and years as printed
+          on each first edition, in publication order, 1841 to 2015. The
+          one-line glosses are our characterisation of each book, not
+          quotations from it.
+        </li>
+        <li>
+          <strong>The film, and Michael Burry</strong> — <em>The Big Short</em>,
+          dir. Adam McKay, Paramount Pictures, 2015, from Michael Lewis's book
+          (2010). Burry ran Scion Capital and began buying credit default swaps
+          against subprime mortgage bonds in 2005; his investors tried to
+          withdraw and he restricted redemptions before the position paid off
+          in 2007–08. In January 2023 he posted a one-word tweet, "Sell." The
+          S&amp;P 500 rose sharply over the rest of that year, and in October
+          2023 he posted "I was wrong to say sell." The clip is a click-to-load
+          embed through youtube-nocookie.com — nothing is requested from
+          YouTube unless you press play.
+        </li>
+        <li>
+          <strong>Conformity</strong> — Solomon Asch (1951, 1956): about three
+          quarters of participants agreed with an obviously wrong majority at
+          least once.
         </li>
         <li>
           <strong>The stat bars are not all data.</strong> Only "Record" is
