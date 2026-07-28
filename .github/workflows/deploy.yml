@@ -2,7 +2,10 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # The feature branch deploys too, so the piece can be previewed on a real
+    # phone before anything is merged. Pages serves whichever deployment ran
+    # last, so remove the branch here once this is merged to main.
+    branches: [main, claude/stock-crashes-scrollytelling-mxyuqv]
   workflow_dispatch:
 
 permissions:
