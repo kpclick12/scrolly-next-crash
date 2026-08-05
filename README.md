@@ -3,7 +3,7 @@
 **Nobody saw it coming** — a short, light scrollytelling story about why market
 crashes cannot be predicted.
 
-Live: https://kpclick12.github.io/scrolly-next-crash/
+
 
 ## The one thing
 
